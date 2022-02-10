@@ -20,6 +20,7 @@ namespace GiantScape.Client.Tilemaps
         public Tileset(TilesetData tilesetData)
         {
             this.tilesetData = tilesetData;
+            LoadTileData();
         }
 
         public void LoadTileData()
