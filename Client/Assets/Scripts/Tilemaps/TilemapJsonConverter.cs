@@ -2,7 +2,10 @@
 using System.Collections;
 
 using UnityEngine;
-using UnityEngine.Tilemaps;
+
+using GiantScape.Common.Game.Tilemaps;
+
+using UnityTilemap = UnityEngine.Tilemaps.Tilemap;
 
 namespace GiantScape.Client.Tilemaps
 {
@@ -12,9 +15,8 @@ namespace GiantScape.Client.Tilemaps
         private Vector2Int baseOffset;
 
         [SerializeField]
-        private Tilemap[] layers;
+        private UnityTilemap[] layers;
 
-        public TilesetData Tileset { get; set; }
         public Vector2Int Size { get; set; }
 
         private string heldJson;
@@ -35,19 +37,18 @@ namespace GiantScape.Client.Tilemaps
         private IEnumerator LoadData()
         {
             var tilemapData = JsonUtility.FromJson<TilemapData>(heldJson);
-            Tileset = tilemapData.tileset;
-            Tileset.LoadTileData();
-            Size = tilemapData.size;
+            var tilemap = new Tilemap(tilemapData, tilemapData.tileset);
+            Size = tilemap.Size;
 
-            Debug.Log($"Loaded tilemap of size {{{Size}}} using tileset {Tileset.tilesetName}");
+            Debug.Log($"Loaded tilemap of size {{{Size}}} using tileset {tilemap.Tileset.TilesetName}");
             Debug.Log($"Found {tilemapData.layers.Length} map layers...");
 
             var layersData = tilemapData.layers.ToList()
-                .Zip(layers, (layerData, tilemap) => (layerData, tilemap));
+                .Zip(layers, (layerData, unityTilemap) => (layerData, unityTilemap));
 
-            foreach (var (layerData, tilemap) in layersData)
+            foreach (var (layerData, unityTilemap) in layersData)
             {
-                LoadDataToTilemap(layerData, tilemap, heldOffset + baseOffset);
+                LoadDataToTilemap(layerData, unityTilemap, tilemap.Tileset, heldOffset + baseOffset);
                 yield return null;
             }
 
@@ -60,13 +61,13 @@ namespace GiantScape.Client.Tilemaps
             return string.Empty;
         }
 
-        private void LoadDataToTilemap(LayerData layer, Tilemap tilemap, Vector2Int offset)
+        private void LoadDataToTilemap(LayerData layer, UnityTilemap tilemap, Tileset tileset, Vector2Int offset)
         {
             for (int y = 0; y < Size.y; y++)
             {
                 for (int x = 0; x < Size.x; x++)
                 {
-                    var tile = Tileset.GetTile(layer.tiles[y * Size.x + x]);
+                    var tile = tileset.GetTile(layer.tiles[y * Size.x + x]);
                     tilemap.SetTile(new Vector3Int(x + offset.x, (Size.y - y) + offset.y, 0), tile);
                 }
             }
