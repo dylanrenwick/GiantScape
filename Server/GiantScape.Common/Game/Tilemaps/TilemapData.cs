@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 
+using Newtonsoft.Json;
+
 namespace GiantScape.Common.Game.Tilemaps
 {
     [Serializable]
@@ -18,6 +20,11 @@ namespace GiantScape.Common.Game.Tilemaps
                 tileset = tileset,
                 layers = layers.Select(l => l.Subregion(start, size, this.size)).ToArray()
             };
+        }
+
+        public static TilemapData FromJson(string json)
+        {
+            return JsonConvert.DeserializeObject<TilemapData>(json);
         }
     }
 }

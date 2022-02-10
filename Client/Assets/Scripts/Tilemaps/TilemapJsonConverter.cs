@@ -31,7 +31,7 @@ namespace GiantScape.Client.Tilemaps
 
         private IEnumerator LoadData()
         {
-            var tilemapData = JsonUtility.FromJson<TilemapData>(heldJson);
+            var tilemapData = TilemapData.FromJson(heldJson);
             var tilemap = new Tilemap(tilemapData, tilemapData.tileset);
             Size = tilemap.Size;
 
@@ -63,7 +63,8 @@ namespace GiantScape.Client.Tilemaps
                 for (int x = 0; x < Size.x; x++)
                 {
                     var tile = tileset.GetTile(layer.tiles[y * Size.x + x]);
-                    tilemap.SetTile(new Vector3Int(x + offset.x, (Size.y - y) + offset.y, 0), tile);
+                    var tilemapPos = new Vector3Int(x + offset.x, (Size.y - y) + offset.y, 0);
+                    tilemap.SetTile(tilemapPos, tile);
                 }
             }
         }
