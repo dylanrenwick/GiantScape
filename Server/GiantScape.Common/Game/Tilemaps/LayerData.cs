@@ -1,8 +1,12 @@
-﻿namespace GiantScape.Common.Game.Tilemaps
+﻿using System;
+
+namespace GiantScape.Common.Game.Tilemaps
 {
+    [Serializable]
     public class LayerData
     {
         public int[] tiles { get; set; }
+
         public LayerData Subregion(Vector2Int start, Vector2Int size, Vector2Int outerSize)
         {
             int[] subregionTiles = new int[size.x * size.y];

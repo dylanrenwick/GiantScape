@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace GiantScape.Common.Game.Tilemaps
 {
+    [Serializable]
     public class TilemapData
     {
         public Vector2Int size { get; set; }

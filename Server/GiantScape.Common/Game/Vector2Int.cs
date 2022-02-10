@@ -1,5 +1,8 @@
-﻿namespace GiantScape.Common.Game
+﻿using System;
+
+namespace GiantScape.Common.Game
 {
+    [Serializable]
     public class Vector2Int
     {
         public int x { get; set; }
