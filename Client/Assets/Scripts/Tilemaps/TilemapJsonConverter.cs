@@ -29,11 +29,6 @@ namespace GiantScape.Client.Tilemaps
             UnityMainThreadDispatcher.Instance().Enqueue(LoadData());
         }
 
-        /*public void Update()
-        {
-            if (enabled) LoadData();
-        }*/
-
         private IEnumerator LoadData()
         {
             var tilemapData = JsonUtility.FromJson<TilemapData>(heldJson);
