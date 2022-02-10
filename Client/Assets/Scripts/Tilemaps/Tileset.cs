@@ -3,16 +3,24 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+using GiantScape.Common.Game.Tilemaps;
+
 namespace GiantScape.Client.Tilemaps
 {
-    [Serializable]
-    public class TilesetData
+    public class Tileset
     {
-        [NonSerialized]
+        public string TilesetName => tilesetData.tilesetName;
+
         private Tile[] tiles;
 
-        public string[] tileNames;
-        public string tilesetName;
+        private TilesetData tilesetData;
+
+        private string[] tileNames => tilesetData.tileNames;
+
+        public Tileset(TilesetData tilesetData)
+        {
+            this.tilesetData = tilesetData;
+        }
 
         public void LoadTileData()
         {
@@ -24,15 +32,17 @@ namespace GiantScape.Client.Tilemaps
             int failures = 0;
             for (int index = 1; index < tileNames.Length; index++)
             {
+                string resourcePath = $"Tilemaps/Tiles/{TilesetName}_{tileNames[index]}";
                 Tile tile = null;
                 try
                 {
-                    tile = Resources.Load<Tile>($"Tilemaps/Tiles/{tilesetName}_{tileNames[index]}");
+                    tile = Resources.Load<Tile>(resourcePath);
+                    // TODO: Handle this better
                     if (tile == null) throw new Exception();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Debug.LogWarning($"Failed to load tile from Tilemaps/Tiles/{tilesetName}_{tileNames[index]}");
+                    Debug.LogWarning($"Failed to load tile from '{resourcePath}'");
                     failures++;
                 }
                 finally
