@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiantScape.Common", "GiantScape.Common.Net\GiantScape.Common.csproj", "{86211FF2-B7F8-4B81-98B7-1DB5B3EB068C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiantScape.Server", "GiantScape.Server.Core\GiantScape.Server.csproj", "{43996807-3704-46E5-9319-4E8E09C2C18A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiantScape.Server.Console", "GiantScape.Server.Console\GiantScape.Server.Console.csproj", "{75E1F39C-3EC2-4857-B0C7-67B8EDD2FC0D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiantScape.Server.TestClient", "GiantScape.Server.TestClient\GiantScape.Server.TestClient.csproj", "{FF8E88DA-5214-4328-BCCC-AD7A2341B9FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiantScape.Common", "GiantScape.Common\GiantScape.Common.csproj", "{86211FF2-B7F8-4B81-98B7-1DB5B3EB068C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{86211FF2-B7F8-4B81-98B7-1DB5B3EB068C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86211FF2-B7F8-4B81-98B7-1DB5B3EB068C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86211FF2-B7F8-4B81-98B7-1DB5B3EB068C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86211FF2-B7F8-4B81-98B7-1DB5B3EB068C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{43996807-3704-46E5-9319-4E8E09C2C18A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{43996807-3704-46E5-9319-4E8E09C2C18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43996807-3704-46E5-9319-4E8E09C2C18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{FF8E88DA-5214-4328-BCCC-AD7A2341B9FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF8E88DA-5214-4328-BCCC-AD7A2341B9FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF8E88DA-5214-4328-BCCC-AD7A2341B9FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86211FF2-B7F8-4B81-98B7-1DB5B3EB068C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86211FF2-B7F8-4B81-98B7-1DB5B3EB068C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86211FF2-B7F8-4B81-98B7-1DB5B3EB068C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86211FF2-B7F8-4B81-98B7-1DB5B3EB068C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

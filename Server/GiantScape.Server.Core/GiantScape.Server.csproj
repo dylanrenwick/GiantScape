@@ -53,17 +53,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GiantScape.Common.Net\GiantScape.Common.csproj">
-      <Project>{86211ff2-b7f8-4b81-98b7-1db5b3eb068c}</Project>
-      <Name>GiantScape.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\Tilemaps\overworld.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\GiantScape.Common\GiantScape.Common.csproj">
+      <Project>{86211ff2-b7f8-4b81-98b7-1db5b3eb068c}</Project>
+      <Name>GiantScape.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

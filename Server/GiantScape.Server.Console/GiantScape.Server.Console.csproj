@@ -50,7 +50,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GiantScape.Common.Net\GiantScape.Common.csproj">
+    <ProjectReference Include="..\GiantScape.Common\GiantScape.Common.csproj">
       <Project>{86211ff2-b7f8-4b81-98b7-1db5b3eb068c}</Project>
       <Name>GiantScape.Common</Name>
     </ProjectReference>
