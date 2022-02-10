@@ -1,6 +1,6 @@
-﻿namespace GiantScape.Server.Game
+﻿namespace GiantScape.Common.Game
 {
-    internal class Player
+    public class Player
     {
         public Vector2Int Position { get; set; }
     }

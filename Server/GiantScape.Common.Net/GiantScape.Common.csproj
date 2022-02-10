@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,6 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\Player.cs" />
+    <Compile Include="Game\Tilemaps\LayerData.cs" />
+    <Compile Include="Game\Tilemaps\TilemapData.cs" />
+    <Compile Include="Game\Tilemaps\TilesetData.cs" />
+    <Compile Include="Game\World.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
     <Compile Include="Logging\Constants.cs" />
     <Compile Include="Logging\Loggable.cs" />
@@ -60,8 +68,11 @@
     <Compile Include="Net\Packets\PacketStream.cs" />
     <Compile Include="Net\Packets\PacketType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Game\Vector2Int.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetPath)" "$(SolutionDir)..\Client\Assets\Libs\$(TargetFileName)"</PostBuildEvent>

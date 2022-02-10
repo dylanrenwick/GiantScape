@@ -1,6 +1,6 @@
-﻿namespace GiantScape.Server.Game.Tilemaps
+﻿namespace GiantScape.Common.Game.Tilemaps
 {
-    internal class LayerData
+    public class LayerData
     {
         public int[] tiles { get; set; }
         public LayerData Subregion(Vector2Int start, Vector2Int size, Vector2Int outerSize)

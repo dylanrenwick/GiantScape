@@ -2,12 +2,12 @@
 
 using Newtonsoft.Json;
 
+using GiantScape.Common.Game.Tilemaps;
 using GiantScape.Common.Logging;
-using GiantScape.Server.Game.Tilemaps;
 
-namespace GiantScape.Server.Game
+namespace GiantScape.Common.Game
 {
-    internal class World : Loggable
+    public class World : Loggable
     {
         private const string filepath = @"Resources/Tilemaps/overworld.json";
 

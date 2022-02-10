@@ -1,6 +1,6 @@
-﻿namespace GiantScape.Server.Game
+﻿namespace GiantScape.Common.Game
 {
-    internal class Vector2Int
+    public class Vector2Int
     {
         public int x { get; set; }
         public int y { get; set; }

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 using Newtonsoft.Json;
 
+using GiantScape.Common.Game;
+using GiantScape.Common.Game.Tilemaps;
 using GiantScape.Common.Logging;
 using GiantScape.Common.Net.Packets;
-using GiantScape.Server.Game;
-using GiantScape.Server.Game.Tilemaps;
 using GiantScape.Server.Net;
 
 namespace GiantScape.Server

@@ -1,6 +1,6 @@
-﻿namespace GiantScape.Server.Game.Tilemaps
+﻿namespace GiantScape.Common.Game.Tilemaps
 {
-    internal class TilesetData
+    public class TilesetData
     {
         public string[] tileNames { get; set; }
         public string tilesetName { get; set; }

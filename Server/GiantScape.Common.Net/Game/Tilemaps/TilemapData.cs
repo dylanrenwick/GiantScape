@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 
-namespace GiantScape.Server.Game.Tilemaps
+namespace GiantScape.Common.Game.Tilemaps
 {
-    internal class TilemapData
+    public class TilemapData
     {
         public Vector2Int size { get; set; }
         public LayerData[] layers { get; set; }
