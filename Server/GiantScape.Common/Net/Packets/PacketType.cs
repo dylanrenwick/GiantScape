@@ -13,6 +13,7 @@
         LoginSuccess,
         LoginFail,
         /* Game */
+        MapRequest,
         Map,
     }
 }
