@@ -51,7 +51,7 @@ namespace GiantScape.Client.Tilemaps
             network.PacketReceived.AddListener(OnPacketReceived);
             IEnumerable<MapPacket> queuedMapPackets = network.PacketBacklog
                 .Where(packet => packet.Type == PacketType.Map)
-                .Cast<MapPacket>();
+                .Cast<MapPacket>().ToList();
 
             foreach (MapPacket packet in queuedMapPackets)
             {
