@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net.Sockets;
 
 using UnityEngine;
@@ -16,6 +17,8 @@ namespace GiantScape.Client.Net
 
         public PacketEvent PacketReceived;
 
+        public HashSet<NetworkPacket> PacketBacklog;
+
         private NetworkClient client;
         private UnityLogger logger = new UnityLogger();
 
@@ -30,6 +33,7 @@ namespace GiantScape.Client.Net
 
             var sock = new Socket(SocketType.Stream, ProtocolType.Tcp);
             var conn = new NetworkConnection(sock, logger);
+            PacketBacklog = new HashSet<NetworkPacket>();
             client = new NetworkClient(conn, logger);
             client.PacketReceived += OnPacketReceived;
 
@@ -44,7 +48,9 @@ namespace GiantScape.Client.Net
 
         private void OnPacketReceived(object sender, PacketEventArgs e)
         {
-            PacketReceived.Invoke(e.Packet);
+            var eventState = new EventState<NetworkPacket>(e.Packet);
+            PacketReceived.Invoke(eventState);
+            if (!eventState.Handled) PacketBacklog.Add(e.Packet);
         }
     }
 }
