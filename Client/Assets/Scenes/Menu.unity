@@ -640,6 +640,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   address: 127.0.0.1
   port: 17000
+  PacketReceived:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &505677929
 Transform:
   m_ObjectHideFlags: 0
@@ -679,9 +682,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   network: {fileID: 505677928}
-  LoginSuccess:
-    m_PersistentCalls:
-      m_Calls: []
+  scenePath: Scenes/Main
 --- !u!1 &934955976
 GameObject:
   m_ObjectHideFlags: 0
