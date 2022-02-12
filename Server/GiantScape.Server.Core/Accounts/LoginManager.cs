@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using GiantScape.Common.Net.Packets;
 
@@ -17,7 +17,13 @@ namespace GiantScape.Server.Accounts
 
         public void HandlePacket(PlayerClient player, NetworkPacket packet)
         {
+            if (loginRequested.Contains(player))
+            {
+                if (packet.Type == PacketType.Login)
+                {
 
+                }
+            }
         }
     }
 }

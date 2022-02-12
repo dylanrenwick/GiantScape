@@ -10,7 +10,7 @@ namespace GiantScape.Common.Net.Packets
     {
         public override PacketType Type => PacketType.Map;
 
-        public override ushort PacketLength => GetSize(MapJson);
+        public override ushort PacketLength => PacketEncoding.GetSize(MapJson);
 
         public string MapJson { get; private set; }
 
@@ -21,7 +21,7 @@ namespace GiantScape.Common.Net.Packets
 
         public override byte[] GetContentBytes()
         {
-            return ContentsToBytes(MapJson);
+            return PacketEncoding.ContentsToBytes(MapJson);
         }
 
         public MapPacket() { }
