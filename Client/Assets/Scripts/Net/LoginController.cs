@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Text;
 using System.Security.Cryptography;
 
@@ -37,7 +38,7 @@ namespace GiantScape.Client.Net
         {
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] hashBytes = hash.ComputeHash(passwordBytes);
-            return Encoding.ASCII.GetString(hashBytes);
+            return Convert.ToBase64String(hashBytes);
         }
 
         private void OnPacketReceived(EventState<NetworkPacket> state)
