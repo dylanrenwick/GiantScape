@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -62,7 +62,7 @@ namespace GiantScape.Server.Net
         {
             var conn = new NetworkConnection(sock, Log);
 
-            conn.ConnectionLost += OnConnectionLost;
+            conn.ConnectionClosed += OnConnectionClosed;
 
             connections.Add(conn);
             NewConnection?.Invoke(this, new NetworkEventArgs(conn));
@@ -82,7 +82,7 @@ namespace GiantScape.Server.Net
             ThreadLoop();
         }
 
-        private void OnConnectionLost(object sender, EventArgs e)
+        private void OnConnectionClosed(object sender, EventArgs e)
         {
             if (sender == null) return;
             NetworkConnection connection = (NetworkConnection)sender;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Sockets;
 
@@ -13,7 +13,7 @@ namespace GiantScape.Common.Net
 
         public event EventHandler<PacketEventArgs> PacketReceived;
         public event EventHandler<NetworkEventArgs> Connected;
-        public event EventHandler<NetworkEventArgs> ConnectionLost;
+        public event EventHandler<NetworkEventArgs> ConnectionClosed;
 
         public bool IsConnected => socket.Connected;
 
