@@ -20,6 +20,11 @@ namespace GiantScape.Client.Net
         private NetworkClient client;
         private UnityLogger logger = new UnityLogger();
 
+        public void SendPacket(NetworkPacket packet)
+        {
+            client.SendPacket(packet);
+        }
+
         private void Start()
         {
             DontDestroyOnLoad(this);
