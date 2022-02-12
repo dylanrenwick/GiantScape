@@ -2,6 +2,9 @@ using System.Text.RegularExpressions;
 
 using UnityEngine;
 
+using GiantScape.Client.Net;
+using GiantScape.Common.Net.Packets;
+
 namespace GiantScape.Client.Tilemaps
 {
     public class TilemapImporter : MonoBehaviour
@@ -12,6 +15,8 @@ namespace GiantScape.Client.Tilemaps
         [SerializeField]
         private TilemapJsonConverter tilemapJsonConverter;
 
+        private NetworkController network;
+
         public void Import()
         {
             if (tilemapJsonConverter == null) return;
@@ -20,17 +25,27 @@ namespace GiantScape.Client.Tilemaps
             tilemapJsonConverter.LoadJson(StripComments(jsonFile.text), Vector2Int.zero);
         }
 
-        public void Clear()
-        {
-
-        }
-
 #if UNITY_EDITOR
         public void Export()
         {
             throw new System.NotImplementedException();
         }
 #endif
+
+        public void OnPacketReceived(NetworkPacket packet)
+        {
+            if (packet.Type == PacketType.Map)
+            {
+                var mapPacket = (MapPacket)packet;
+                tilemapJsonConverter.LoadJson(mapPacket.MapJson, Vector2Int.zero);
+            }
+        }
+
+        private void Start()
+        {
+            network = GameObject.Find("NetworkController").GetComponent<NetworkController>();
+            network.PacketReceived.AddListener(OnPacketReceived);
+        }
 
         private static Regex commentRegex = new Regex("\\/\\*.*?\\*\\/");
 
