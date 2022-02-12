@@ -51,6 +51,8 @@ namespace GiantScape.Server
             PlayerClient player = AddPlayerClient(client);
 
             client.PacketReceived += OnPacketReceived;
+
+            if (!player.IsLoggedIn) loginManager.RequestLogin(player);
         }
 
         private void OnPacketReceived(object sender, PacketEventArgs e)
