@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Collections.Generic;
 
@@ -83,6 +83,14 @@ namespace GiantScape.Server
                 return player;
             }
             else return players[client];
+        }
+
+        private void SendWorldData(PlayerClient player)
+        {
+            Log.Info($"{player.Client} Sending world data...");
+            TilemapData worldData = world.GetMapDataForPlayer(player.Player);
+            var mapPacket =new MapPacket(JsonConvert.SerializeObject(worldData));
+            player.Client.SendPacket(mapPacket);
         }
     }
 }
