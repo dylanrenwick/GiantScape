@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Net;
 using System.Net.Sockets;
 
@@ -45,6 +45,7 @@ namespace GiantScape.Common.Net
         public void Close()
         {
             socket.Close();
+            ConnectionClosed?.Invoke(this, new NetworkEventArgs(this));
         }
 
         public void SendBytes(byte[] buffer)
