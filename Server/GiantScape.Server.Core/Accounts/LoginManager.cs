@@ -1,18 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using GiantScape.Common.Logging;
 using GiantScape.Common.Net.Packets;
 
 namespace GiantScape.Server.Accounts
 {
-    internal class LoginManager
+    internal class LoginManager : Loggable
     {
         public event EventHandler<EventArgs> PlayerLogin;
 
         private HashSet<PlayerClient> loginRequested = new HashSet<PlayerClient>();
 
+        public LoginManager(Logger log)
+            : base(log)
+        { }
+
         public void RequestLogin(PlayerClient player)
         {
+            Log.Debug($"{player.Client} Sending login request");
             var loginRequestPacket = new MiscPacket(PacketType.LoginRequest);
             player.Client.SendPacket(loginRequestPacket);
             loginRequested.Add(player);
@@ -24,6 +30,7 @@ namespace GiantScape.Server.Accounts
             {
                 if (packet.Type == PacketType.Login)
                 {
+                    Log.Debug($"{player.Client} Received login attempt");
                     HandleLogin(player, (LoginPacket)packet);
                 }
             }
@@ -36,6 +43,7 @@ namespace GiantScape.Server.Accounts
                 player.Account.Username = packet.Username;
                 player.Account.LoggedIn = true;
 
+                Log.Info($"{player.Client} Login successful");
                 player.Client.SendPacket(new MiscPacket(PacketType.LoginSuccess));
                 loginRequested.Remove(player);
 
@@ -43,6 +51,7 @@ namespace GiantScape.Server.Accounts
             }
             else
             {
+                Log.Warn($"{player.Client} Login failed");
                 player.Client.SendPacket(new MiscPacket(PacketType.LoginFail));
             }
         }

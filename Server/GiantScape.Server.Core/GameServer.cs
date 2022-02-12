@@ -29,7 +29,7 @@ namespace GiantScape.Server
             networkServer = new NetworkServer(IPAddress.Parse(address), port, Log.SubLogger("NETWRK"));
             networkServer.ConnectionEstablished += OnClientConnected;
 
-            loginManager = new LoginManager();
+            loginManager = new LoginManager(Log.SubLogger("LOGIN"));
 
             world = new World(Log.SubLogger("WORLD"));
             players = new Dictionary<NetworkClient, PlayerClient>();
