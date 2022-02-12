@@ -15,6 +15,7 @@ namespace GiantScape.Common.Net.Packets
         public string Username { get; private set; }
         public string PasswordHash { get; private set; }
 
+        public LoginPacket() { }
         public LoginPacket(string username, string passwordHash)
         {
             Username = username;
