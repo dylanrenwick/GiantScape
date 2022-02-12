@@ -6,7 +6,7 @@ namespace GiantScape.Common.Net.Packets
 {
     internal static class PacketEncoding
     {
-        public static ushort GetSize(params object[] contents)
+        public static ushort GetContentsSize(params object[] contents)
         {
             return (ushort)contents.ToList().Aggregate(0, (sum, next) => sum + GetSingleSize(next));
         }
@@ -19,31 +19,31 @@ namespace GiantScape.Common.Net.Packets
 
         public static byte[] ContentsToBytes(params object[] contents)
         {
-            int size = GetSize(contents);
+            int size = GetContentsSize(contents);
             byte[] bytes = new byte[size];
             int offset = 0;
 
             for (int i = 0; i < contents.Length; i++)
             {
                 int singleSize = GetSingleSize(contents[i]);
-                ToBytes(contents[i], bytes, offset, singleSize);
+                ObjectToBytes(contents[i], bytes, offset, singleSize);
                 offset += singleSize;
             }
 
             return bytes;
         }
 
-        public static void ToBytes(object obj, byte[] buffer, int offset, int length)
+        public static void ObjectToBytes(object obj, byte[] buffer, int offset, int length)
         {
-            byte[] bytes = GetSingleBytes(obj);
+            byte[] bytes = SingleToBytes(obj);
             Array.Copy(bytes, 0, buffer, offset, length);
         }
 
-        public static byte[] GetSingleBytes(object obj)
+        public static byte[] SingleToBytes(object obj)
         {
             Type objType = obj.GetType();
 
-            if (objType == typeof(string)) return GetStringBytes((string)obj);
+            if (objType == typeof(string)) return StringToBytes((string)obj);
             else if (objType == typeof(bool)) return BitConverter.GetBytes((bool)obj);
             else if (objType == typeof(char)) return BitConverter.GetBytes((char)obj);
             else if (objType == typeof(double)) return BitConverter.GetBytes((double)obj);
@@ -58,12 +58,27 @@ namespace GiantScape.Common.Net.Packets
             else return Array.Empty<byte>();
         }
 
-        public static byte[] GetStringBytes(string str)
+        public static byte[] StringToBytes(string str)
         {
             byte[] stringBytes = Encoding.ASCII.GetBytes(str);
             byte[] lengthBytes = BitConverter.GetBytes((ushort)stringBytes.Length);
 
             return lengthBytes.Concat(stringBytes).ToArray();
+        }
+
+        public static ushort BytesToU16(byte[] bytes, int offset = 0)
+        {
+            return BitConverter.ToUInt16(bytes, offset);
+        }
+
+        public static string BytesToString(byte[] bytes, int offset = 0)
+        {
+            ushort stringLength = BytesToU16(bytes, offset);
+            return BytesToString(bytes, offset + sizeof(ushort), stringLength);
+        }
+        public static string BytesToString(byte[] bytes, int offset, int length)
+        {
+            return Encoding.ASCII.GetString(bytes, offset, length);
         }
     }
 }
