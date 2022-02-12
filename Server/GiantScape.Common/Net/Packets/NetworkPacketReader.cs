@@ -106,6 +106,10 @@ namespace GiantScape.Common.Net.Packets
                     var handshake = new HandshakePacket();
                     handshake.FromBytes(packet);
                     return handshake;
+                case PacketType.Login:
+                    var login = new LoginPacket();
+                    login.FromBytes(packet);
+                    return login;
                 case PacketType.Map:
                     var map = new MapPacket();
                     map.FromBytes(packet);
