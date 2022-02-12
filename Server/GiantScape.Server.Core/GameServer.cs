@@ -13,39 +13,37 @@ using GiantScape.Server.Net;
 
 namespace GiantScape.Server
 {
-    public class GameServer
+    public class GameServer : Loggable
     {
         private readonly NetworkServer networkServer;
-
-        private readonly Logger logger;
 
         private readonly World world;
 
         private readonly Dictionary<NetworkClient, PlayerClient> players;
 
-        public GameServer(string address, ushort port, Logger logger)
+        public GameServer(string address, ushort port, Logger log)
+            : base(log)
         {
-            networkServer = new NetworkServer(IPAddress.Parse(address), port, logger.SubLogger("NETWRK"));
+            networkServer = new NetworkServer(IPAddress.Parse(address), port, Log.SubLogger("NETWRK"));
             networkServer.ConnectionEstablished += OnClientConnected;
 
-            this.logger = logger;
-            world = new World(logger.SubLogger("WORLD"));
+            world = new World(Log.SubLogger("WORLD"));
             players = new Dictionary<NetworkClient, PlayerClient>();
         }
 
         public void Start()
         {
-            logger.Info("Starting game server...");
+            Log.Info("Starting game server...");
             networkServer.Start();
 
-            logger.Info("Game server started");
+            Log.Info("Game server started");
             while (networkServer.IsRunning) { }
         }
 
         private void OnClientConnected(object sender, EventArgs e)
         {
             NetworkClient client = (NetworkClient)sender;
-            logger.Info($"{client} Client connection established");
+            Log.Info($"{client} Client connection established");
             AddPlayerClient(new PlayerClient
             {
                 Client = client,
@@ -61,7 +59,7 @@ namespace GiantScape.Server
             NetworkClient client = (NetworkClient)sender;
             if (!players.ContainsKey(client))
             {
-                logger.Warn($"{client} Unrecognized client, terminating connection");
+                Log.Warn($"{client} Unrecognized client, terminating connection");
                 client.Close();
                 return;
             }
