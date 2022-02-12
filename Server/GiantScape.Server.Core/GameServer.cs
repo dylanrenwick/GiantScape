@@ -8,6 +8,7 @@ using GiantScape.Common.Game;
 using GiantScape.Common.Game.Tilemaps;
 using GiantScape.Common.Logging;
 using GiantScape.Common.Net.Packets;
+using GiantScape.Server.Accounts;
 using GiantScape.Server.Net;
 
 namespace GiantScape.Server
@@ -20,7 +21,7 @@ namespace GiantScape.Server
 
         private readonly World world;
 
-        private readonly Dictionary<NetworkClient, Player> players;
+        private readonly List<PlayerClient> players;
 
         public GameServer(string address, ushort port, Logger logger)
         {
@@ -29,7 +30,7 @@ namespace GiantScape.Server
 
             this.logger = logger;
             world = new World(logger.SubLogger("WORLD"));
-            players = new Dictionary<NetworkClient, Player>();
+            players = new List<PlayerClient>();
         }
 
         public void Start()
@@ -45,12 +46,12 @@ namespace GiantScape.Server
         {
             NetworkClient client = (NetworkClient)sender;
             logger.Info($"{client} Client connection established");
-            players.Add(client, new Player());
-
-            logger.Info($"{client} Sending world data...");
-            TilemapData worldData = world.GetMapDataForPlayer(players[client]);
-            var mapPacket = new MapPacket(JsonConvert.SerializeObject(worldData));
-            client.SendPacket(mapPacket);
+            players.Add(new PlayerClient
+            {
+                Client = client,
+                Player = new Player(),
+                Account = new Account()
+            });
         }
     }
 }
