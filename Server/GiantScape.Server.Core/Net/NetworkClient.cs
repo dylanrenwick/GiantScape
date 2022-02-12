@@ -55,7 +55,9 @@ namespace GiantScape.Server.Net
                         ConnectionEstablished?.Invoke(this, new EventArgs());
                     }
                     break;
+                case ClientState.Connected:
                 default:
+                    PacketReceived?.Invoke(this, new PacketEventArgs(packet));
                     break;
             }
         }
