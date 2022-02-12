@@ -44,12 +44,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accounts\Account.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="GameServer.cs" />
+    <Compile Include="Accounts\LoginManager.cs" />
     <Compile Include="Net\Constants.cs" />
     <Compile Include="Net\NetworkClient.cs" />
     <Compile Include="Net\NetworkServer.cs" />
     <Compile Include="Net\TcpServer.cs" />
+    <Compile Include="PlayerClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

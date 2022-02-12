@@ -59,6 +59,7 @@
     <Compile Include="Net\NetworkEventArgs.cs" />
     <Compile Include="Net\Packets\ClosePacket.cs" />
     <Compile Include="Net\Packets\HandshakePacket.cs" />
+    <Compile Include="Net\Packets\LoginPacket.cs" />
     <Compile Include="Net\Packets\MapPacket.cs" />
     <Compile Include="Net\Packets\MiscPacket.cs" />
     <Compile Include="Net\Packets\NetworkPacket.cs" />
