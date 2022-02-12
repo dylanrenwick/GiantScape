@@ -17,7 +17,12 @@ namespace GiantScape.Common.Net.Packets
 
         public override void FromBytes(byte[] bytes)
         {
-            throw new NotImplementedException();
+            string username = PacketEncoding.BytesToString(bytes);
+            int offset = PacketEncoding.GetSingleSize(username);
+            string passwordHash = PacketEncoding.BytesToString(bytes, offset);
+
+            Username = username;
+            PasswordHash = passwordHash;
         }
 
         public override byte[] GetContentBytes()
