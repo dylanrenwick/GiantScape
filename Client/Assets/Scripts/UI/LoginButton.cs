@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+using GiantScape.Client.Net;
+
 namespace GiantScape.Client.UI
 {
     public class LoginButton : MonoBehaviour
@@ -34,6 +36,9 @@ namespace GiantScape.Client.UI
         [SerializeField]
         private Text errorText;
 
+        [SerializeField]
+        private LoginController loginController;
+
         private void Start()
         {
             ResetColor();
@@ -55,6 +60,14 @@ namespace GiantScape.Client.UI
         {
             ResetColor();
             errorText.enabled = false;
+        }
+
+        public void OnMouseClick()
+        {
+            if (Validate()) 
+                loginController.Login(
+                    usernameField.text,
+                    passwordField.text);
         }
 
         private void ResetColor()
