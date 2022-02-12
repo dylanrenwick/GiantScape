@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Net;
 using System.Collections.Generic;
 
@@ -67,6 +67,17 @@ namespace GiantScape.Server
 
             PlayerClient player = players[client];
             if (!player.IsLoggedIn) loginManager.HandlePacket(player, e.Packet);
+            else
+            {
+                switch (e.Packet.Type)
+                {
+                    case PacketType.MapRequest:
+                        SendWorldData(player);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         private PlayerClient AddPlayerClient(NetworkClient client)
