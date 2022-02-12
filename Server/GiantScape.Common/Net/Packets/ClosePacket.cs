@@ -9,7 +9,7 @@ namespace GiantScape.Common.Net.Packets
 
         public override PacketType Type => PacketType.Close;
 
-        public override ushort PacketLength => (ushort)GetSize(Reason);
+        public override ushort PacketLength => PacketEncoding.GetSingleSize(Reason);
 
         public ClosePacket() { }
         public ClosePacket(string reason)
@@ -19,12 +19,12 @@ namespace GiantScape.Common.Net.Packets
 
         public override void FromBytes(byte[] bytes)
         {
-            Reason = Encoding.ASCII.GetString(bytes);
+            Reason = PacketEncoding.BytesToString(bytes);
         }
 
         public override byte[] GetContentBytes()
         {
-            return Encoding.ASCII.GetBytes(Reason);
+            return PacketEncoding.StringToBytes(Reason);
         }
     }
 }

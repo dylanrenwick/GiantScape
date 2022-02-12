@@ -10,7 +10,7 @@ namespace GiantScape.Common.Net.Packets
     {
         public override PacketType Type => PacketType.Login;
 
-        public override ushort PacketLength => PacketEncoding.GetSize(Username, PasswordHash);
+        public override ushort PacketLength => PacketEncoding.GetContentsSize(Username, PasswordHash);
 
         public string Username { get; private set; }
         public string PasswordHash { get; private set; }

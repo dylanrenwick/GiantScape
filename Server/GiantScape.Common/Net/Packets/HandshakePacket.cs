@@ -11,7 +11,7 @@ namespace GiantScape.Common.Net.Packets
 
         public override PacketType Type => PacketType.Handshake;
 
-        public override ushort PacketLength => (ushort)GetSize(ProtocolVersion);
+        public override ushort PacketLength => PacketEncoding.GetSingleSize(ProtocolVersion);
 
         public HandshakePacket() { }
         public HandshakePacket(string protoVer)
@@ -21,12 +21,12 @@ namespace GiantScape.Common.Net.Packets
 
         public override byte[] GetContentBytes()
         {
-            return ContentsToBytes(ProtocolVersion).ToArray();
+            return PacketEncoding.StringToBytes(ProtocolVersion);
         }
 
         public override void FromBytes(byte[] bytes)
         {
-            ProtocolVersion = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
+            ProtocolVersion = PacketEncoding.BytesToString(bytes);
         }
     }
 }
