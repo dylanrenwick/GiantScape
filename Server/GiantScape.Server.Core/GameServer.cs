@@ -21,7 +21,7 @@ namespace GiantScape.Server
 
         private readonly World world;
 
-        private readonly List<PlayerClient> players;
+        private readonly Dictionary<NetworkClient, PlayerClient> players;
 
         public GameServer(string address, ushort port, Logger logger)
         {
@@ -30,7 +30,7 @@ namespace GiantScape.Server
 
             this.logger = logger;
             world = new World(logger.SubLogger("WORLD"));
-            players = new List<PlayerClient>();
+            players = new Dictionary<NetworkClient, PlayerClient>();
         }
 
         public void Start()
@@ -46,12 +46,17 @@ namespace GiantScape.Server
         {
             NetworkClient client = (NetworkClient)sender;
             logger.Info($"{client} Client connection established");
-            players.Add(new PlayerClient
+            AddPlayerClient(new PlayerClient
             {
                 Client = client,
                 Player = new Player(),
                 Account = new Account()
             });
+        }
+
+        private void AddPlayerClient(PlayerClient player)
+        {
+            players.Add(player.Client, player);
         }
     }
 }
