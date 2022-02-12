@@ -41,6 +41,10 @@ namespace GiantScape.Server.Accounts
 
                 PlayerLogin?.Invoke(player, new EventArgs());
             }
+            else
+            {
+                player.Client.SendPacket(new MiscPacket(PacketType.LoginFail));
+            }
         }
 
         private bool Login(string username, string passwordHash)
