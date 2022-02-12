@@ -35,7 +35,7 @@ namespace GiantScape.Common.Net.Packets
 
         private static ushort GetSingleSize(object obj)
         {
-            if (obj is string str) return (ushort)Encoding.ASCII.GetByteCount(str);
+            if (obj is string str) return (ushort)(sizeof(ushort) + Encoding.ASCII.GetByteCount(str));
             else return (ushort)System.Runtime.InteropServices.Marshal.SizeOf(obj);
         }
 
@@ -65,7 +65,7 @@ namespace GiantScape.Common.Net.Packets
         {
             Type objType = obj.GetType();
 
-            if (objType == typeof(string)) return Encoding.ASCII.GetBytes((string)obj);
+            if (objType == typeof(string)) return GetStringBytes((string)obj);
             else if (objType == typeof(bool)) return BitConverter.GetBytes((bool)obj);
             else if (objType == typeof(char)) return BitConverter.GetBytes((char)obj);
             else if (objType == typeof(double)) return BitConverter.GetBytes((double)obj);
@@ -78,6 +78,14 @@ namespace GiantScape.Common.Net.Packets
             else if (objType == typeof(ushort)) return BitConverter.GetBytes((ushort)obj);
             else if (objType == typeof(byte)) return new byte[1] { (byte)obj };
             else return Array.Empty<byte>();
+        }
+
+        private static byte[] GetStringBytes(string str)
+        {
+            byte[] stringBytes = Encoding.ASCII.GetBytes(str);
+            byte[] lengthBytes = BitConverter.GetBytes((ushort)stringBytes.Length);
+
+            return lengthBytes.Concat(stringBytes).ToArray();
         }
     }
 }
