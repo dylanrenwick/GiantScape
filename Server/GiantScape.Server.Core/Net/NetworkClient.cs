@@ -11,6 +11,7 @@ namespace GiantScape.Server.Net
     public class NetworkClient : PacketClient
     {
         public event EventHandler<EventArgs> ConnectionEstablished;
+        public event EventHandler<PacketEventArgs> PacketReceived;
 
         private ClientState state;
 
