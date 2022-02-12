@@ -65,6 +65,7 @@
     <Compile Include="Net\Packets\NetworkPacket.cs" />
     <Compile Include="Net\Packets\NetworkPacketReader.cs" />
     <Compile Include="Net\Packets\PacketClient.cs" />
+    <Compile Include="Net\Packets\PacketEncoding.cs" />
     <Compile Include="Net\Packets\PacketEventArgs.cs" />
     <Compile Include="Net\Packets\PacketStream.cs" />
     <Compile Include="Net\Packets\PacketType.cs" />
