@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using GiantScape.Common.Net.Packets;
@@ -35,6 +35,8 @@ namespace GiantScape.Server.Accounts
             {
                 player.Account.Username = packet.Username;
                 player.Account.LoggedIn = true;
+
+                player.Client.SendPacket(new MiscPacket(PacketType.LoginSuccess));
 
                 PlayerLogin?.Invoke(player, new EventArgs());
             }
