@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using GiantScape.Common.Net.Packets;
 
@@ -6,6 +7,8 @@ namespace GiantScape.Server.Accounts
 {
     internal class LoginManager
     {
+        public event EventHandler<EventArgs> PlayerLogin;
+
         private HashSet<PlayerClient> loginRequested = new HashSet<PlayerClient>();
 
         public void RequestLogin(PlayerClient player)
@@ -32,6 +35,8 @@ namespace GiantScape.Server.Accounts
             {
                 player.Account.Username = packet.Username;
                 player.Account.LoggedIn = true;
+
+                PlayerLogin?.Invoke(player, new EventArgs());
             }
         }
 
