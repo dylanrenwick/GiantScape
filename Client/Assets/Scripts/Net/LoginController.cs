@@ -40,13 +40,16 @@ namespace GiantScape.Client.Net
             return Encoding.ASCII.GetString(hashBytes);
         }
 
-        private void OnPacketReceived(NetworkPacket packet)
+        private void OnPacketReceived(EventState<NetworkPacket> state)
         {
+            var packet = state.State;
             if (packet.Type == PacketType.LoginSuccess)
             {
                 var mapRequest = new MiscPacket(PacketType.MapRequest);
                 network.SendPacket(mapRequest);
+                network.PacketReceived.RemoveListener(OnPacketReceived);
                 UnityMainThreadDispatcher.Instance().Enqueue(LoadMainScene());
+                state.Handled = true;
             }
         }
 

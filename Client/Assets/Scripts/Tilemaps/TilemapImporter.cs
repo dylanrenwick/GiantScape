@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 using UnityEngine;
@@ -32,12 +34,14 @@ namespace GiantScape.Client.Tilemaps
         }
 #endif
 
-        public void OnPacketReceived(NetworkPacket packet)
+        public void OnPacketReceived(EventState<NetworkPacket> state)
         {
+            var packet = state.State;
             if (packet.Type == PacketType.Map)
             {
                 var mapPacket = (MapPacket)packet;
-                tilemapJsonConverter.LoadJson(mapPacket.MapJson, Vector2Int.zero);
+                LoadMapFromPacket(mapPacket);
+                state.Handled = true;
             }
         }
 
@@ -45,6 +49,20 @@ namespace GiantScape.Client.Tilemaps
         {
             network = GameObject.Find("NetworkController").GetComponent<NetworkController>();
             network.PacketReceived.AddListener(OnPacketReceived);
+            IEnumerable<MapPacket> queuedMapPackets = network.PacketBacklog
+                .Where(packet => packet.Type == PacketType.Map)
+                .Cast<MapPacket>();
+
+            foreach (MapPacket packet in queuedMapPackets)
+            {
+                LoadMapFromPacket(packet);
+                network.PacketBacklog.Remove(packet);
+            }
+        }
+
+        private void LoadMapFromPacket(MapPacket packet)
+        {
+            tilemapJsonConverter.LoadJson(packet.MapJson, Vector2Int.zero);
         }
 
         private static Regex commentRegex = new Regex("\\/\\*.*?\\*\\/");
