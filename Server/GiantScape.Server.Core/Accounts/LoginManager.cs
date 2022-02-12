@@ -21,9 +21,23 @@ namespace GiantScape.Server.Accounts
             {
                 if (packet.Type == PacketType.Login)
                 {
-
+                    HandleLogin(player, (LoginPacket)packet);
                 }
             }
+        }
+
+        private void HandleLogin(PlayerClient player, LoginPacket packet)
+        {
+            if (Login(packet.Username, packet.PasswordHash))
+            {
+                player.Account.Username = packet.Username;
+                player.Account.LoggedIn = true;
+            }
+        }
+
+        private bool Login(string username, string passwordHash)
+        {
+            return true;
         }
     }
 }
