@@ -14,5 +14,10 @@ namespace GiantScape.Server.Accounts
             player.Client.SendPacket(loginRequestPacket);
             loginRequested.Add(player);
         }
+
+        public void HandlePacket(PlayerClient player, NetworkPacket packet)
+        {
+
+        }
     }
 }
