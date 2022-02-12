@@ -58,6 +58,7 @@ namespace GiantScape.Server.Accounts
 
         private bool Login(string username, string passwordHash)
         {
+            Log.Debug($"Attempting login with username: '{username}'");
             return true;
         }
     }
