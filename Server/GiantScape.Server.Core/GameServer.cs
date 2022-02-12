@@ -17,6 +17,8 @@ namespace GiantScape.Server
     {
         private readonly NetworkServer networkServer;
 
+        private readonly LoginManager loginManager;
+
         private readonly World world;
 
         private readonly Dictionary<NetworkClient, PlayerClient> players;
@@ -26,6 +28,8 @@ namespace GiantScape.Server
         {
             networkServer = new NetworkServer(IPAddress.Parse(address), port, Log.SubLogger("NETWRK"));
             networkServer.ConnectionEstablished += OnClientConnected;
+
+            loginManager = new LoginManager();
 
             world = new World(Log.SubLogger("WORLD"));
             players = new Dictionary<NetworkClient, PlayerClient>();
