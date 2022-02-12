@@ -7,5 +7,9 @@
         Handshake = 2,
         Ack = 3,
         Map = 4,
+        LoginRequest = 5,
+        Login = 6,
+        LoginSuccess = 7,
+        LoginFail = 8
     }
 }
