@@ -86,7 +86,7 @@ namespace GiantScape.Server.Net
         {
             if (sender == null) return;
             NetworkConnection connection = (NetworkConnection)sender;
-            Log.Warn($"{connection} Connection dropped");
+            Log.Info($"{connection} Connection closed");
             connections.Remove(connection);
         }
     }
