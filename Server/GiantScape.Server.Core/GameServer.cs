@@ -48,12 +48,7 @@ namespace GiantScape.Server
         {
             NetworkClient client = (NetworkClient)sender;
             Log.Info($"{client} Client connection established");
-            AddPlayerClient(new PlayerClient
-            {
-                Client = client,
-                Player = new Player(),
-                Account = new Account()
-            });
+            PlayerClient player = AddPlayerClient(client);
 
             client.PacketReceived += OnPacketReceived;
         }
@@ -72,9 +67,20 @@ namespace GiantScape.Server
             if (!player.IsLoggedIn) loginManager.HandlePacket(player, e.Packet);
         }
 
-        private void AddPlayerClient(PlayerClient player)
+        private PlayerClient AddPlayerClient(NetworkClient client)
         {
-            players.Add(player.Client, player);
+            if (!players.ContainsKey(client))
+            {
+                var player = new PlayerClient
+                {
+                    Client = client,
+                    Player = new Player(),
+                    Account = new Account()
+                };
+                players.Add(client, player);
+                return player;
+            }
+            else return players[client];
         }
     }
 }
