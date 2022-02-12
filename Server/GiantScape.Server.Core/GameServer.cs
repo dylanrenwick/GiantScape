@@ -69,6 +69,7 @@ namespace GiantScape.Server
             }
 
             PlayerClient player = players[client];
+            if (!player.IsLoggedIn) loginManager.HandlePacket(player, e.Packet);
         }
 
         private void AddPlayerClient(PlayerClient player)
