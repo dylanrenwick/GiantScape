@@ -7,5 +7,5 @@ using GiantScape.Common.Net.Packets;
 namespace GiantScape.Client.Net
 {
     [Serializable]
-    public class PacketEvent : UnityEvent<NetworkPacket> { }
+    public class PacketEvent : UnityEvent<EventState<NetworkPacket>> { }
 }
