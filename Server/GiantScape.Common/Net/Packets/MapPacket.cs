@@ -16,7 +16,7 @@ namespace GiantScape.Common.Net.Packets
 
         public override void FromBytes(byte[] bytes)
         {
-            MapJson = Encoding.ASCII.GetString(bytes);
+            MapJson = PacketEncoding.BytesToString(bytes);
         }
 
         public override byte[] GetContentBytes()
