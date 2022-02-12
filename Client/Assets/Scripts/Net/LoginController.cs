@@ -43,7 +43,7 @@ namespace GiantScape.Client.Net
         private void OnPacketReceived(NetworkPacket packet)
         {
             if (packet.Type == PacketType.LoginSuccess)
-                StartCoroutine(LoadMainScene());
+                UnityMainThreadDispatcher.Instance().Enqueue(LoadMainScene());
         }
 
         private IEnumerator LoadMainScene()
