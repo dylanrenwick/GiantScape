@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using GiantScape.Common.Logging;
 using GiantScape.Common.Net;
@@ -75,7 +75,6 @@ namespace GiantScape.Server.Net
             TcpConnected,
             HandshakeSent,
             Connected,
-            AwaitingAuth,
         }
     }
 }
