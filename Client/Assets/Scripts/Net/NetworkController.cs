@@ -14,8 +14,7 @@ namespace GiantScape.Client.Net
         [SerializeField]
         private int port;
 
-        [SerializeField]
-        private PacketEvent PacketReceived;
+        public PacketEvent PacketReceived;
 
         private NetworkClient client;
         private UnityLogger logger = new UnityLogger();
