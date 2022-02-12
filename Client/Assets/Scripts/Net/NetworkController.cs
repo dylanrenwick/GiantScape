@@ -2,7 +2,6 @@ using System.Net.Sockets;
 
 using UnityEngine;
 
-using GiantScape.Client.Tilemaps;
 using GiantScape.Common.Net;
 using GiantScape.Common.Net.Packets;
 
@@ -16,13 +15,15 @@ namespace GiantScape.Client.Net
         private int port;
 
         [SerializeField]
-        private TilemapJsonConverter tilemapConverter;
+        private PacketEvent PacketReceived;
 
         private NetworkClient client;
         private UnityLogger logger = new UnityLogger();
 
         private void Start()
         {
+            DontDestroyOnLoad(this);
+
             var sock = new Socket(SocketType.Stream, ProtocolType.Tcp);
             var conn = new NetworkConnection(sock, logger);
             client = new NetworkClient(conn, logger);
@@ -39,20 +40,7 @@ namespace GiantScape.Client.Net
 
         private void OnPacketReceived(object sender, PacketEventArgs e)
         {
-            var packet = e.Packet;
-            switch (packet.Type)
-            {
-                case PacketType.Map:
-                    var mapPacket = (MapPacket)packet;
-                    logger.Info($"Loading map info from server...");
-                    tilemapConverter.LoadJson(mapPacket.MapJson, Vector2Int.zero);
-                    break;
-                case PacketType.None:
-                case PacketType.Handshake:
-                case PacketType.Ack:
-                default:
-                    break;
-            }
+            PacketReceived.Invoke(e.Packet);
         }
     }
 }
