@@ -52,6 +52,21 @@ namespace GiantScape.Server
                 Player = new Player(),
                 Account = new Account()
             });
+
+            client.PacketReceived += OnPacketReceived;
+        }
+
+        private void OnPacketReceived(object sender, PacketEventArgs e)
+        {
+            NetworkClient client = (NetworkClient)sender;
+            if (!players.ContainsKey(client))
+            {
+                logger.Warn($"{client} Unrecognized client, terminating connection");
+                client.Close();
+                return;
+            }
+
+            PlayerClient player = players[client];
         }
 
         private void AddPlayerClient(PlayerClient player)
