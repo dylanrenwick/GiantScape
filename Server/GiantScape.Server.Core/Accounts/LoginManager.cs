@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using GiantScape.Common.Net.Packets;
 
@@ -6,7 +6,7 @@ namespace GiantScape.Server.Accounts
 {
     internal class LoginManager
     {
-        private List<PlayerClient> loginRequested = new List<PlayerClient>();
+        private HashSet<PlayerClient> loginRequested = new HashSet<PlayerClient>();
 
         public void RequestLogin(PlayerClient player)
         {
