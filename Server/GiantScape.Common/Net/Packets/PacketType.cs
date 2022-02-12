@@ -3,13 +3,16 @@
     public enum PacketType : ushort
     {
         None = 0,
+        /* Net */
         Close = 1,
         Handshake = 2,
         Ack = 3,
-        Map = 4,
-        LoginRequest = 5,
-        Login = 6,
-        LoginSuccess = 7,
-        LoginFail = 8
+        /* Login */
+        LoginRequest = 4,
+        Login = 5,
+        LoginSuccess = 6,
+        LoginFail = 7,
+        /* Game */
+        Map = 8,
     }
 }
