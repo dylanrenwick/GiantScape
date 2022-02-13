@@ -69,7 +69,23 @@ namespace GiantScape.Server.Accounts
         private bool Login(string username, string passwordHash)
         {
             Log.Debug($"Attempting login with username: '{username}'");
-            return true;
+            User user = data.Users.Where(u => u.Username == username).FirstOrDefault();
+            if (user == null)
+            {
+                Log.Debug($"No user found with username: '{username}'");
+                return false;
+            }
+
+            if (passwordHash.Equals(user.PasswordHash))
+            {
+                Log.Debug($"Login successful");
+                return true;
+            }
+            else
+            {
+                Log.Debug("Password hash does not match stored hash");
+                return false;
+            }
         }
 
         private PlayerClient LoadPlayerInfo(NetworkClient client, string username)
