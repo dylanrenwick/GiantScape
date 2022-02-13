@@ -44,14 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Data\UserLevel.cs" />
     <Compile Include="Game\GameEntity.cs" />
-    <Compile Include="Game\Data\Player.cs" />
     <Compile Include="Game\PlayerEntity.cs" />
     <Compile Include="Game\Tilemaps\LayerData.cs" />
     <Compile Include="Game\Tilemaps\TilemapData.cs" />
     <Compile Include="Game\Tilemaps\TilesetData.cs" />
-    <Compile Include="Game\Data\User.cs" />
     <Compile Include="Game\World.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
     <Compile Include="Logging\Constants.cs" />
