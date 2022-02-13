@@ -22,6 +22,12 @@ namespace GiantScape.Common.Game
             tilemapData = JsonConvert.DeserializeObject<TilemapData>(json);
             log.Debug($"Loaded {tilemapData.layers.Length} map layers");
         }
+        public World(TilemapData mapData, Logger log)
+            : base(log)
+        {
+            tilemapData = mapData;
+            log.Debug($"Loaded {tilemapData.layers.Length} map layers");
+        }
 
         public TilemapData GetMapDataForPlayer(Player player)
         {
