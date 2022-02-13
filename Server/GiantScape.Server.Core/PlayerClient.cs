@@ -1,4 +1,6 @@
-﻿using GiantScape.Common.Game;
+﻿using System;
+
+using GiantScape.Common.Game;
 using GiantScape.Server.Accounts;
 using GiantScape.Server.Data.Models;
 using GiantScape.Server.Net;
@@ -10,8 +12,15 @@ namespace GiantScape.Server
         public Player Player { get; set; }
         public PlayerEntity Entity { get; set; }
         public NetworkClient Client { get; set; }
-        public Account Account { get; set; }
+    }
 
-        public bool IsLoggedIn => Account?.LoggedIn ?? false;
+    internal class PlayerClientEventArgs : EventArgs
+    {
+        public PlayerClient PlayerClient { get; set; }
+
+        public PlayerClientEventArgs(PlayerClient player)
+        {
+            PlayerClient = player;
+        }
     }
 }

@@ -62,7 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Accounts\Account.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DataStores\DataStore.cs" />
     <Compile Include="DataStores\PlayerData.cs" />

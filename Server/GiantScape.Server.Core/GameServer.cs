@@ -58,11 +58,10 @@ namespace GiantScape.Server
         {
             NetworkClient client = (NetworkClient)sender;
             Log.Info($"{client} Client connection established");
-            PlayerClient player = AddPlayerClient(client);
 
             client.PacketReceived += OnPacketReceived;
 
-            if (!player.IsLoggedIn) loginManager.RequestLogin(player);
+            loginManager.RequestLogin(client);
         }
 
         private void OnPacketReceived(object sender, PacketEventArgs e)
@@ -70,40 +69,24 @@ namespace GiantScape.Server
             NetworkClient client = (NetworkClient)sender;
             if (!players.ContainsKey(client))
             {
-                Log.Warn($"{client} Unrecognized client, terminating connection");
-                client.Close();
+                if (!loginManager.HandlePacket(client, e.Packet))
+                {
+                    Log.Warn($"{client} Unrecognized client, terminating connection");
+                    client.Close();
+                }
+
                 return;
             }
 
             PlayerClient player = players[client];
-            if (!player.IsLoggedIn) loginManager.HandlePacket(player, e.Packet);
-            else
+            switch (e.Packet.Type)
             {
-                switch (e.Packet.Type)
-                {
-                    case PacketType.MapRequest:
-                        SendWorldData(player);
-                        break;
-                    default:
-                        break;
-                }
+                case PacketType.MapRequest:
+                    SendWorldData(player);
+                    break;
+                default:
+                    break;
             }
-        }
-
-        private PlayerClient AddPlayerClient(NetworkClient client)
-        {
-            if (!players.ContainsKey(client))
-            {
-                var player = new PlayerClient
-                {
-                    Client = client,
-                    Entity = new PlayerEntity(),
-                    Account = new Account()
-                };
-                players.Add(client, player);
-                return player;
-            }
-            else return players[client];
         }
 
         private void SendWorldData(PlayerClient player)
