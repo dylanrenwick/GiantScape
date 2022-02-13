@@ -1,0 +1,24 @@
+{
+    "Users": [
+        {
+            "ID": "f352f76d-8136-424a-aa45-39868f32d3fa",
+            "Username": "Mayube",
+            "Email": "skidsirongenesisdev@gmail.com",
+            "PasswordHash": "e6c83b282aeb2e022844595721cc00bbda47cb24537c1779f9bb84f04039e1676e6ba8573e588da1052510e3aa0a32a9e55879ae22b0c2d62136fc0a3e85f8bb",
+            "Level": 0
+        }
+    ],
+    "Players": [
+        {
+            "UserID": "f352f76d-8136-424a-aa45-39868f32d3fa",
+            "DataStoreFilename": "Mayube_0"
+        }
+    ],
+    "Maps": [
+        {
+            "ID": "13a3afd9-7408-45b1-97bc-87f13bff024d",
+            "Name": "overworld",
+            "Filename": "overworld"
+        }
+    ]
+}
