@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Accounts\Account.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Data\IDataProvider.cs" />
     <Compile Include="GameServer.cs" />
     <Compile Include="Accounts\LoginManager.cs" />
     <Compile Include="Net\Constants.cs" />
