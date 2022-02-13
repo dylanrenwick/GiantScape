@@ -22,7 +22,7 @@ namespace GiantScape.Server.Data.SQLite
             throw new NotImplementedException();
         }
 
-        public void GetPlayerAsync(string username, Action<Player> callback)
+        public void GetPlayerAsync(string username, Action<PlayerEntity> callback)
         {
             throw new NotImplementedException();
         }

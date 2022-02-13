@@ -9,6 +9,6 @@ namespace GiantScape.Server.Data
     {
         TilemapData GetMap();
 
-        void GetPlayerAsync(string username, Action<Player> callback);
+        void GetPlayerAsync(string username, Action<PlayerEntity> callback);
     }
 }

@@ -29,7 +29,7 @@ namespace GiantScape.Common.Game
             log.Debug($"Loaded {tilemapData.layers.Length} map layers");
         }
 
-        public TilemapData GetMapDataForPlayer(Player player)
+        public TilemapData GetMapDataForPlayer(PlayerEntity player)
         {
             return tilemapData;
         }

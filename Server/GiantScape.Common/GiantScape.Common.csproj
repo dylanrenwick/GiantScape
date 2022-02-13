@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\GameEntity.cs" />
-    <Compile Include="Game\Player.cs" />
+    <Compile Include="Game\PlayerEntity.cs" />
     <Compile Include="Game\Tilemaps\LayerData.cs" />
     <Compile Include="Game\Tilemaps\TilemapData.cs" />
     <Compile Include="Game\Tilemaps\TilesetData.cs" />

@@ -92,7 +92,7 @@ namespace GiantScape.Server
                 var player = new PlayerClient
                 {
                     Client = client,
-                    Player = new Player(),
+                    Player = new PlayerEntity(),
                     Account = new Account()
                 };
                 players.Add(client, player);
