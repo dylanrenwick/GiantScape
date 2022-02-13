@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 
@@ -32,7 +32,7 @@ namespace GiantScape.Server
             networkServer = new NetworkServer(IPAddress.Parse(address), port, Log.SubLogger("NETWRK"));
             networkServer.ConnectionEstablished += OnClientConnected;
 
-            loginManager = new LoginManager(Log.SubLogger("LOGIN"));
+            loginManager = new LoginManager(dataProvider, Log.SubLogger("LOGIN"));
 
             TilemapData mapData = dataProvider.GetMap();
 

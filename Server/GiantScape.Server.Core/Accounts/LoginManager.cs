@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 using GiantScape.Common.Logging;
 using GiantScape.Common.Net.Packets;
+using GiantScape.Server.Data;
 
 namespace GiantScape.Server.Accounts
 {
@@ -12,9 +13,13 @@ namespace GiantScape.Server.Accounts
 
         private HashSet<PlayerClient> loginRequested = new HashSet<PlayerClient>();
 
-        public LoginManager(Logger log)
+        private readonly IDataProvider data;
+
+        public LoginManager(IDataProvider data, Logger log)
             : base(log)
-        { }
+        {
+            this.data = data;
+        }
 
         public void RequestLogin(PlayerClient player)
         {
@@ -43,6 +48,8 @@ namespace GiantScape.Server.Accounts
                 player.Account.Username = packet.Username;
                 player.Account.LoggedIn = true;
 
+                LoadPlayerInfo(player, packet.Username);
+
                 Log.Info($"{player.Client} Login successful");
                 player.Client.SendPacket(new MiscPacket(PacketType.LoginSuccess));
                 loginRequested.Remove(player);
@@ -60,6 +67,11 @@ namespace GiantScape.Server.Accounts
         {
             Log.Debug($"Attempting login with username: '{username}'");
             return true;
+        }
+
+        private void LoadPlayerInfo(PlayerClient player, string username)
+        {
+            data.GetPlayerAsync(username, loadedPlayer => player.Player = loadedPlayer);
         }
     }
 }
