@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using GiantScape.Common.Logging;
 using GiantScape.Common.Net.Packets;
 using GiantScape.Server.Data;
+using GiantScape.Server.Data.Models;
 
 namespace GiantScape.Server.Accounts
 {
@@ -69,9 +71,12 @@ namespace GiantScape.Server.Accounts
             return true;
         }
 
-        private void LoadPlayerInfo(PlayerClient player, string username)
+        private void LoadPlayerInfo(PlayerClient client, string username)
         {
-            data.GetPlayerAsync(username, loadedPlayer => player.Player = loadedPlayer);
+            User user = data.Users.Where(u => u.Username == username).First();
+            Player player = data.Players.Where(p => p.UserID == user.ID).First();
+
+            client.Player = player;
         }
     }
 }

@@ -1,12 +1,14 @@
 ﻿using GiantScape.Common.Game;
 using GiantScape.Server.Accounts;
+using GiantScape.Server.Data.Models;
 using GiantScape.Server.Net;
 
 namespace GiantScape.Server
 {
     internal class PlayerClient
     {
-        public PlayerEntity Player { get; set; }
+        public Player Player { get; set; }
+        public PlayerEntity Entity { get; set; }
         public NetworkClient Client { get; set; }
         public Account Account { get; set; }
 

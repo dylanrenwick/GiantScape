@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 using Newtonsoft.Json;
@@ -10,6 +11,8 @@ using GiantScape.Common.Logging;
 using GiantScape.Common.Net.Packets;
 using GiantScape.Server.Accounts;
 using GiantScape.Server.Data;
+using GiantScape.Server.Data.Json;
+using GiantScape.Server.Data.Models;
 using GiantScape.Server.Net;
 
 namespace GiantScape.Server
@@ -29,14 +32,16 @@ namespace GiantScape.Server
         public GameServer(string address, ushort port, Logger log)
             : base(log)
         {
+            dataProvider = new JsonDataProvider(@"Resources/database.json");
+
             networkServer = new NetworkServer(IPAddress.Parse(address), port, Log.SubLogger("NETWRK"));
             networkServer.ConnectionEstablished += OnClientConnected;
 
             loginManager = new LoginManager(dataProvider, Log.SubLogger("LOGIN"));
 
-            TilemapData mapData = dataProvider.GetMap();
+            Map map = dataProvider.Maps.First();
 
-            world = new World(mapData, Log.SubLogger("WORLD"));
+            world = new World(Log.SubLogger("WORLD"), map.Filename);
             players = new Dictionary<NetworkClient, PlayerClient>();
         }
 
@@ -92,7 +97,7 @@ namespace GiantScape.Server
                 var player = new PlayerClient
                 {
                     Client = client,
-                    Player = new PlayerEntity(),
+                    Entity = new PlayerEntity(),
                     Account = new Account()
                 };
                 players.Add(client, player);
@@ -104,7 +109,7 @@ namespace GiantScape.Server
         private void SendWorldData(PlayerClient player)
         {
             Log.Info($"{player.Client} Sending world data...");
-            TilemapData worldData = world.GetMapDataForPlayer(player.Player);
+            TilemapData worldData = world.GetMapDataForPlayer(player.Entity);
             var mapPacket =new MapPacket(JsonConvert.SerializeObject(worldData));
             player.Client.SendPacket(mapPacket);
         }

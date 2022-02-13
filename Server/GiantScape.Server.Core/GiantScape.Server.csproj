@@ -72,6 +72,10 @@
     <Compile Include="Accounts\Account.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Data\IDataProvider.cs" />
+    <Compile Include="Data\Models\Map.cs" />
+    <Compile Include="Data\Models\Player.cs" />
+    <Compile Include="Data\Models\User.cs" />
+    <Compile Include="Data\Models\UserLevel.cs" />
     <Compile Include="GameServer.cs" />
     <Compile Include="Accounts\LoginManager.cs" />
     <Compile Include="Net\Constants.cs" />
