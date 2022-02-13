@@ -71,15 +71,8 @@
   <ItemGroup>
     <Compile Include="Accounts\Account.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Data\DbColumnCondition.cs" />
-    <Compile Include="Data\DbCompoundCondition.cs" />
-    <Compile Include="Data\DbCondition.cs" />
-    <Compile Include="Data\DbQuery.cs" />
-    <Compile Include="Data\DbSet.cs" />
     <Compile Include="Data\IDataProvider.cs" />
     <Compile Include="Data\SQLite\SqliteDataProvider.cs" />
-    <Compile Include="Data\SQLite\SqliteDbQuery.cs" />
-    <Compile Include="Data\SQLite\SqliteDbSet.cs" />
     <Compile Include="GameServer.cs" />
     <Compile Include="Accounts\LoginManager.cs" />
     <Compile Include="Net\Constants.cs" />
