@@ -38,6 +38,7 @@ namespace GiantScape.Server
             networkServer.ConnectionEstablished += OnClientConnected;
 
             loginManager = new LoginManager(dataProvider, Log.SubLogger("LOGIN"));
+            loginManager.PlayerLogin += OnPlayerLogin;
 
             Map map = dataProvider.Maps.First();
 
@@ -64,6 +65,15 @@ namespace GiantScape.Server
             loginManager.RequestLogin(client);
         }
 
+        private void OnPlayerLogin(object sender, PlayerClientEventArgs e)
+        {
+            NetworkClient client = (NetworkClient)sender;
+            PlayerClient player = e.PlayerClient;
+
+            if (players.ContainsKey(client)) players[client] = player;
+            else players.Add(client, player);
+        }
+
         private void OnPacketReceived(object sender, PacketEventArgs e)
         {
             NetworkClient client = (NetworkClient)sender;
@@ -73,6 +83,7 @@ namespace GiantScape.Server
                 {
                     Log.Warn($"{client} Unrecognized client, terminating connection");
                     client.Close();
+                    if (players.ContainsKey(client)) players.Remove(client);
                 }
 
                 return;
