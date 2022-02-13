@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Collections.Generic;
 
 using Microsoft.Data.Sqlite;
@@ -22,7 +23,7 @@ namespace GiantScape.Server.Data.SQLite
         public override IEnumerable<T> Query(DbCondition<T> condition)
         {
             string conditionWhereClause = EvaluateCondition(condition);
-
+            throw new NotImplementedException();
         }
 
         private static string EvaluateCondition(DbCondition<T> condition)
