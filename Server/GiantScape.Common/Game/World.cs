@@ -9,13 +9,15 @@ namespace GiantScape.Common.Game
 {
     public class World : Loggable
     {
-        private const string filepath = @"Resources/Tilemaps/overworld.json";
+        private const string filepathFormat = "Resources/Tilemaps/{0}.json";
+        private const string filename = @"overworld";
 
         private TilemapData tilemapData;
 
-        public World(Logger log, string mapFilepath = filepath)
+        public World(Logger log, string mapFilename = filename)
             : base(log)
         {
+            string filepath = string.Format(filepathFormat, mapFilename);
             log.Info($"Reading world data from '{filepath}'...");
             string json = File.ReadAllText(filepath);
             log.Debug("Parsing world json...");
