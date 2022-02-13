@@ -9,6 +9,7 @@ namespace GiantScape.Server.Data.SQLite
     internal class SqliteDbSet<T> : DbSet<T>
     {
         private readonly SqliteConnection connection;
+        private readonly string tableName;
 
         public SqliteDbSet(SqliteConnection connection)
         {
@@ -43,6 +44,7 @@ namespace GiantScape.Server.Data.SQLite
                     case CompoundConditionType.And: sb.Append(" AND "); break;
                 }
                 EvaluateCondition(sb, compoundCondition.SecondCondition);
+                sb.AppendLine();
             }
             else if (condition is DbColumnCondition<T> columnCondition)
             {
