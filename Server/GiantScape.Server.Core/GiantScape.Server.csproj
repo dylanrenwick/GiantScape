@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\SQLite.3.13.0\build\net45\SQLite.props" Condition="Exists('..\packages\SQLite.3.13.0\build\net45\SQLite.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -72,6 +72,7 @@
     <Compile Include="Accounts\Account.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Data\IDataProvider.cs" />
+    <Compile Include="Data\Json\JsonDataProvider.cs" />
     <Compile Include="Data\Models\Map.cs" />
     <Compile Include="Data\Models\Player.cs" />
     <Compile Include="Data\Models\User.cs" />
