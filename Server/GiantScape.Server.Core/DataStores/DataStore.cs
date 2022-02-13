@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
@@ -8,8 +8,12 @@ namespace GiantScape.Server.DataStores
 {
     internal partial class DataStore
     {
-        public void SaveToFile(string filepath)
+        private const string filepathFormat = "Resources/DataStores/{0}.dat";
+
+        public void SaveToFile(string filename)
         {
+            string filepath = string.Format(filepathFormat, filename);
+
             using (var fs = new FileStream(filepath, FileMode.OpenOrCreate))
             using (var writer = new BsonDataWriter(fs))
             {
