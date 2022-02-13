@@ -1,6 +1,6 @@
-﻿using System;
-using System.Net;
+using System;
 using System.Collections.Generic;
+using System.Net;
 
 using Newtonsoft.Json;
 
@@ -9,6 +9,7 @@ using GiantScape.Common.Game.Tilemaps;
 using GiantScape.Common.Logging;
 using GiantScape.Common.Net.Packets;
 using GiantScape.Server.Accounts;
+using GiantScape.Server.Data;
 using GiantScape.Server.Net;
 
 namespace GiantScape.Server
@@ -23,6 +24,8 @@ namespace GiantScape.Server
 
         private readonly Dictionary<NetworkClient, PlayerClient> players;
 
+        private readonly IDataProvider dataProvider;
+
         public GameServer(string address, ushort port, Logger log)
             : base(log)
         {
@@ -31,7 +34,9 @@ namespace GiantScape.Server
 
             loginManager = new LoginManager(Log.SubLogger("LOGIN"));
 
-            world = new World(Log.SubLogger("WORLD"));
+            TilemapData mapData = dataProvider.GetMap();
+
+            world = new World(mapData, Log.SubLogger("WORLD"));
             players = new Dictionary<NetworkClient, PlayerClient>();
         }
 
