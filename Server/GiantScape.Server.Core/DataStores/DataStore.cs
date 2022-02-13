@@ -22,6 +22,21 @@ namespace GiantScape.Server.DataStores
             }
         }
 
+        public static DataStore FromFile(string filename)
+        {
+            DataStore dataStore = null;
+            string filepath = string.Format(filepathFormat, filename);
+
+            using (var fs = new FileStream(filepath, FileMode.OpenOrCreate))
+            using (var reader = new BsonDataReader(fs))
+            {
+                var serializer = new JsonSerializer();
+
+                dataStore = serializer.Deserialize<DataStore>(reader);
+            }
+
+            return dataStore;
+        }
         public static DataStore FromJson(string json)
         {
             return JsonConvert.DeserializeObject<DataStore>(json);
