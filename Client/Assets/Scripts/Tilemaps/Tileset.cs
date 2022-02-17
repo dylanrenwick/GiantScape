@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -15,8 +15,6 @@ namespace GiantScape.Client.Tilemaps
 
         private TilesetData tilesetData;
 
-        private string[] tileNames => tilesetData.tileNames;
-
         public Tileset(TilesetData tilesetData)
         {
             this.tilesetData = tilesetData;
@@ -25,7 +23,9 @@ namespace GiantScape.Client.Tilemaps
 
         public void LoadTileData()
         {
-            if (tileNames.Length == 0 || tiles != null) return;
+            if (tilesetData.tiles.Length == 0 || tiles != null) return;
+
+            string[] tileNames = tilesetData.tiles.Select(t => t.ResourceName).ToArray();
 
             tiles = new Tile[tileNames.Length];
 
