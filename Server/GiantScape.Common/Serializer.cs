@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
@@ -10,7 +10,7 @@ namespace GiantScape.Common
         public static byte[] Serialize(object target)
         {
             var mem = new MemoryStream();
-            using (var writer = new BsonWriter(mem))
+            using (var writer = new BsonDataWriter(mem))
             {
                 var serializer = new JsonSerializer();
                 serializer.Serialize(writer, target);
@@ -23,7 +23,7 @@ namespace GiantScape.Common
         {
             var mem = new MemoryStream(bson);
             T result;
-            using (var reader = new BsonReader(mem))
+            using (var reader = new BsonDataReader(mem))
             {
                 var serializer = new JsonSerializer();
                 result = serializer.Deserialize<T>(reader);
