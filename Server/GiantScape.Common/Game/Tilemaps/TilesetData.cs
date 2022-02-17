@@ -5,7 +5,7 @@ namespace GiantScape.Common.Game.Tilemaps
     [Serializable]
     public class TilesetData
     {
-        public string[] tileNames { get; set; }
+        public TileData[] tiles { get; set; }
         public string tilesetName { get; set; }
     }
 }
