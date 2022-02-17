@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
@@ -12,7 +12,10 @@ namespace GiantScape.Common
             var mem = new MemoryStream();
             using (var writer = new BsonDataWriter(mem))
             {
-                var serializer = new JsonSerializer();
+                var serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All
+                });
                 serializer.Serialize(writer, target);
             }
 
