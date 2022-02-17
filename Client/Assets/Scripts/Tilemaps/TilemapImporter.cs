@@ -39,7 +39,7 @@ namespace GiantScape.Client.Tilemaps
             var packet = state.State;
             if (packet.Type == PacketType.Map)
             {
-                var mapPacket = (MapPacket)packet;
+                var mapPacket = (BsonPacket)packet;
                 LoadMapFromPacket(mapPacket);
                 state.Handled = true;
             }
@@ -49,20 +49,20 @@ namespace GiantScape.Client.Tilemaps
         {
             network = GameObject.Find("NetworkController").GetComponent<NetworkController>();
             network.PacketReceived.AddListener(OnPacketReceived);
-            IEnumerable<MapPacket> queuedMapPackets = network.PacketBacklog
+            IEnumerable<BsonPacket> queuedMapPackets = network.PacketBacklog
                 .Where(packet => packet.Type == PacketType.Map)
-                .Cast<MapPacket>().ToList();
+                .Cast<BsonPacket>().ToList();
 
-            foreach (MapPacket packet in queuedMapPackets)
+            foreach (BsonPacket packet in queuedMapPackets)
             {
                 LoadMapFromPacket(packet);
                 network.PacketBacklog.Remove(packet);
             }
         }
 
-        private void LoadMapFromPacket(MapPacket packet)
+        private void LoadMapFromPacket(BsonPacket packet)
         {
-            tilemapJsonConverter.LoadJson(packet.MapJson, Vector2Int.zero);
+            tilemapJsonConverter.LoadBson(packet.MapBson, Vector2Int.zero);
         }
 
         private static Regex commentRegex = new Regex("\\/\\*.*?\\*\\/");

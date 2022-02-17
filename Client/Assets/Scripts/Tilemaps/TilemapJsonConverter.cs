@@ -3,6 +3,7 @@ using System.Collections;
 
 using UnityEngine;
 
+using GiantScape.Common;
 using GiantScape.Common.Game.Tilemaps;
 
 using UnityTilemap = UnityEngine.Tilemaps.Tilemap;
@@ -19,6 +20,7 @@ namespace GiantScape.Client.Tilemaps
 
         public Vector2Int Size { get; set; }
 
+        private byte[] heldBson;
         private string heldJson;
         private Vector2Int heldOffset;
 
@@ -29,16 +31,45 @@ namespace GiantScape.Client.Tilemaps
             UnityMainThreadDispatcher.Instance().Enqueue(LoadData());
         }
 
+        public void LoadBson(byte[] bson, Vector2Int mapOffset)
+        {
+            heldJson = string.Empty;
+            heldBson = bson;
+            heldOffset = mapOffset;
+            UnityMainThreadDispatcher.Instance().Enqueue(LoadData());
+        }
+
         private IEnumerator LoadData()
         {
-            var tilemapData = TilemapData.FromJson(heldJson);
-            var tilemap = new Tilemap(tilemapData, tilemapData.tileset);
+            Tilemap tilemap;
+
+            if (!string.IsNullOrEmpty(heldJson)) tilemap = LoadJsonData();
+            else if (heldBson != null && heldBson.Length > 0) tilemap = LoadBsonData();
+            else throw new System.Exception("Invalid map data");
+
+            return LoadTilemapData(tilemap);
+        }
+
+        private Tilemap LoadJsonData()
+        {
+            var tilemapData = Serializer.Deserialize<TilemapData>(heldJson);
+            return new Tilemap(tilemapData, tilemapData.tileset);
+        }
+
+        private Tilemap LoadBsonData()
+        {
+            var tilemapData = Serializer.Deserialize<TilemapData>(heldBson);
+            return new Tilemap(tilemapData, tilemapData.tileset);
+        }
+
+        private IEnumerator LoadTilemapData(Tilemap tilemap)
+        {
             Size = tilemap.Size;
 
             Debug.Log($"Loaded tilemap of size {{{Size}}} using tileset {tilemap.Tileset.TilesetName}");
-            Debug.Log($"Found {tilemapData.layers.Length} map layers...");
+            Debug.Log($"Found {tilemap.TilemapData.layers.Length} map layers...");
 
-            var layersData = tilemapData.layers.ToList()
+            var layersData = tilemap.TilemapData.layers.ToList()
                 .Zip(layers, (layerData, unityTilemap) => (layerData, unityTilemap));
 
             foreach (var (layerData, unityTilemap) in layersData)
