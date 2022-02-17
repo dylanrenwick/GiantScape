@@ -111,7 +111,7 @@ namespace GiantScape.Common.Net.Packets
                     login.FromBytes(packet);
                     return login;
                 case PacketType.Map:
-                    var map = new MapPacket();
+                    var map = new BsonPacket();
                     map.FromBytes(packet);
                     return map;
                 default:
