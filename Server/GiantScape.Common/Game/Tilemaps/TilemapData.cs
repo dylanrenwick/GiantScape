@@ -21,10 +21,5 @@ namespace GiantScape.Common.Game.Tilemaps
                 layers = layers.Select(l => l.Subregion(start, size, this.size)).ToArray()
             };
         }
-
-        public static TilemapData FromJson(string json)
-        {
-            return JsonConvert.DeserializeObject<TilemapData>(json);
-        }
     }
 }
