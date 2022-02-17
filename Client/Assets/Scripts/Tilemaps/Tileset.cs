@@ -22,6 +22,13 @@ namespace GiantScape.Client.Tilemaps
             LoadTileData();
         }
 
+        public Tile GetTile(int index)
+        {
+            if (tiles == null || index < 0 || index >= tiles.Length) return null;
+
+            return tiles[index];
+        }
+
         public void LoadTileData()
         {
             if (tilesetData.tiles.Length == 0 || tiles != null) return;
@@ -54,13 +61,6 @@ namespace GiantScape.Client.Tilemaps
                 Debug.LogWarning($"Failed to load tile from '{resourcePath}'");
                 return null;
             }
-        }
-
-        public Tile GetTile(int index)
-        {
-            if (tiles == null || index < 0 || index >= tiles.Length) return null;
-
-            return tiles[index];
         }
     }
 }
