@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 
 using UnityEngine;
@@ -34,25 +34,26 @@ namespace GiantScape.Client.Tilemaps
             int failures = 0;
             for (int index = 1; index < tileNames.Length; index++)
             {
-                string resourcePath = $"Tilemaps/Tiles/{TilesetName}_{tileNames[index]}";
-                Tile tile = null;
-                try
-                {
-                    tile = Resources.Load<Tile>(resourcePath);
-                    // TODO: Handle this better
-                    if (tile == null) throw new Exception();
-                }
-                catch (Exception)
-                {
-                    Debug.LogWarning($"Failed to load tile from '{resourcePath}'");
-                    failures++;
-                }
-                finally
-                {
-                    tiles[index] = tile;
-                }
+                tiles[index] = LoadTile(tileNames[index]);
+                if (tiles[index] == null) failures++;
             }
             Debug.Log($"Successfully loaded {tiles.Length - failures}/{tiles.Length} tile resources");
+        }
+
+        private Tile LoadTile(string tileName)
+        {
+            string resourcePath = $"Tilemaps/Tiles/{TilesetName}_{tileName}";
+
+            try
+            {
+                Tile tile = Resources.Load<Tile>(resourcePath);
+                return tile;
+            }
+            catch (Exception)
+            {
+                Debug.LogWarning($"Failed to load tile from '{resourcePath}'");
+                return null;
+            }
         }
 
         public Tile GetTile(int index)
