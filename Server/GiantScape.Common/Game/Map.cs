@@ -4,15 +4,15 @@ namespace GiantScape.Common.Game
 {
     public class Map
     {
-        public string Name => tilemap.Name;
+        public string Name => Tilemap.Name;
 
-        public TilemapData tilemap;
-        public TilesetData tileset;
+        public TilemapData Tilemap;
+        public TilesetData Tileset;
 
         public Map(TilemapData tilemap, TilesetData tileset)
         {
-            this.tilemap = tilemap;
-            this.tileset = tileset;
+            this.Tilemap = tilemap;
+            this.Tileset = tileset;
         }
     }
 }
