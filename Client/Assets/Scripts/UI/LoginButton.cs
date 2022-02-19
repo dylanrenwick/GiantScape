@@ -37,7 +37,7 @@ namespace GiantScape.Client.UI
         private Text errorText;
 
         [SerializeField]
-        private LoginController loginController;
+        private LoadingController loadingController;
 
         private void Start()
         {
@@ -65,7 +65,7 @@ namespace GiantScape.Client.UI
         public void OnMouseClick()
         {
             if (Validate()) 
-                loginController.Login(
+                loadingController.Login(
                     usernameField.text,
                     passwordField.text);
         }
