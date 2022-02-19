@@ -9,5 +9,6 @@ namespace GiantScape.Server.Data
         IEnumerable<UserModel> Users { get; }
         IEnumerable<PlayerModel> Players { get; }
         IEnumerable<MapModel> Maps { get; }
+        IEnumerable<TilesetModel> Tilesets { get; }
     }
 }
