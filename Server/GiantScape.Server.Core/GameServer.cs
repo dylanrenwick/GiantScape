@@ -101,7 +101,7 @@ namespace GiantScape.Server
         {
             Log.Info($"{player.Client} Sending world data...");
             TilemapData worldData = world.GetMapDataForPlayer(player.Entity);
-            var mapPacket =new BsonPacket(PacketType.Map, Serializer.Serialize(worldData));
+            var mapPacket = new BsonPacket(PacketType.Map, Serializer.Serialize(worldData));
             player.Client.SendPacket(mapPacket);
         }
     }
