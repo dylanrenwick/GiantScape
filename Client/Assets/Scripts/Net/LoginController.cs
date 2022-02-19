@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Text;
 using System.Security.Cryptography;
 
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 using GiantScape.Common.Net.Packets;
 
@@ -15,8 +14,7 @@ namespace GiantScape.Client.Net
         [SerializeField]
         private NetworkController network;
 
-        [SerializeField]
-        private string scenePath;
+        public UnityEvent LoginSuccess;
 
         private HashAlgorithm hash;
 
@@ -26,6 +24,7 @@ namespace GiantScape.Client.Net
 
             var loginPacket = new LoginPacket(username, passwordHash);
             network.PacketReceived.AddListener(OnPacketReceived);
+
             network.SendPacket(loginPacket);
         }
 
@@ -46,21 +45,8 @@ namespace GiantScape.Client.Net
             var packet = state.State;
             if (packet.Type == PacketType.LoginSuccess)
             {
-                var mapRequest = new MiscPacket(PacketType.MapRequest);
-                network.SendPacket(mapRequest);
-                network.PacketReceived.RemoveListener(OnPacketReceived);
-                UnityMainThreadDispatcher.Instance().Enqueue(LoadMainScene());
+                LoginSuccess.Invoke();
                 state.Handled = true;
-            }
-        }
-
-        private IEnumerator LoadMainScene()
-        {
-            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scenePath);
-
-            while (!asyncLoad.isDone)
-            {
-                yield return null;
             }
         }
 
