@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 using GiantScape.Common.Logging;
 using GiantScape.Common.Net;
@@ -33,9 +33,6 @@ namespace GiantScape.Client.Net
         {
             switch (state)
             {
-                case ClientState.None:
-                case ClientState.Closed:
-                case ClientState.Error:
                 case ClientState.TcpConnected:
                     if (packet.Type != PacketType.Handshake) throw new Exception();
                     var handshake = (HandshakePacket)packet;
@@ -51,6 +48,9 @@ namespace GiantScape.Client.Net
                 case ClientState.Connected:
                     PacketReceived?.Invoke(this, new PacketEventArgs(packet));
                     break;
+                case ClientState.None:
+                case ClientState.Closed:
+                case ClientState.Error:
                 default:
                     break;
             }
