@@ -15,7 +15,7 @@ namespace GiantScape.Common.Game.Tilemaps
         [JsonProperty("layers")]
         public LayerData[] Layers { get; set; }
         [JsonProperty("tileset")]
-        public string Tileset { get; set; }
+        public string TilesetID { get; set; }
 
         public TilemapData Subregion(Vector2Int start, Vector2Int size)
         {
@@ -23,7 +23,7 @@ namespace GiantScape.Common.Game.Tilemaps
             {
                 Name = Name,
                 Size = size,
-                Tileset = Tileset,
+                TilesetID = TilesetID,
                 Layers = Layers.Select(l => l.Subregion(start, size, this.Size)).ToArray()
             };
         }
