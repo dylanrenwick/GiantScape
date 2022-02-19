@@ -12,12 +12,12 @@ namespace GiantScape.Server.Resources
         private const string RES_TILEMAP = "Tilemaps/";
         private const string RES_TILESET = "Tilesets/";
 
-        public static TilemapData LoadMap(Map map)
+        public static TilemapData LoadMap(MapModel map)
         {
             return LoadObject<TilemapData>($"{RES_ROOT}{RES_TILEMAP}{map.Filename}");
         }
 
-        public static TilesetData LoadTileset(Tileset tileset)
+        public static TilesetData LoadTileset(TilesetModel tileset)
         {
             return LoadObject<TilesetData>($"{RES_ROOT}{RES_TILESET}{tileset.Filename}");
         }

@@ -11,20 +11,20 @@ namespace GiantScape.Server.Data.Json
 {
     internal class JsonDataProvider : IDataProvider
     {
-        public IEnumerable<User> Users { get; private set; }
-        public IEnumerable<Player> Players { get; private set; }
-        public IEnumerable<Map> Maps { get; private set; }
-        public IEnumerable<Tileset> Tilesets { get; private set; }
+        public IEnumerable<UserModel> Users { get; private set; }
+        public IEnumerable<PlayerModel> Players { get; private set; }
+        public IEnumerable<MapModel> Maps { get; private set; }
+        public IEnumerable<TilesetModel> Tilesets { get; private set; }
 
         public JsonDataProvider(string jsonFilename)
         {
             string json = File.ReadAllText(jsonFilename);
             var jsonObj = JObject.Parse(json);
 
-            Users = ParseCollection<User>(jsonObj["Users"]);
-            Players = ParseCollection<Player>(jsonObj["Players"]);
-            Maps = ParseCollection<Map>(jsonObj["Maps"]);
-            Tilesets = ParseCollection<Tileset>(jsonObj["Tilesets"]);
+            Users = ParseCollection<UserModel>(jsonObj["Users"]);
+            Players = ParseCollection<PlayerModel>(jsonObj["Players"]);
+            Maps = ParseCollection<MapModel>(jsonObj["Maps"]);
+            Tilesets = ParseCollection<TilesetModel>(jsonObj["Tilesets"]);
         }
 
         private IEnumerable<T> ParseCollection<T>(JToken json)

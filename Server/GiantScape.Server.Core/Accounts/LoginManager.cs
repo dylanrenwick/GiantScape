@@ -69,7 +69,7 @@ namespace GiantScape.Server.Accounts
         private bool Login(string username, string passwordHash)
         {
             Log.Debug($"Attempting login with username: '{username}'");
-            User user = data.Users.Where(u => u.Username == username).FirstOrDefault();
+            UserModel user = data.Users.Where(u => u.Username == username).FirstOrDefault();
             if (user == null)
             {
                 Log.Debug($"No user found with username: '{username}'");
@@ -90,8 +90,8 @@ namespace GiantScape.Server.Accounts
 
         private PlayerClient LoadPlayerInfo(NetworkClient client, string username)
         {
-            User user = data.Users.Where(u => u.Username == username).First();
-            Player player = data.Players.Where(p => p.UserID == user.ID).First();
+            UserModel user = data.Users.Where(u => u.Username == username).First();
+            PlayerModel player = data.Players.Where(p => p.UserID == user.ID).First();
 
             return new PlayerClient
             {

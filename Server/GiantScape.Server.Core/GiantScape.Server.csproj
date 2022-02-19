@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -67,10 +67,10 @@
     <Compile Include="DataStores\PlayerData.cs" />
     <Compile Include="Data\IDataProvider.cs" />
     <Compile Include="Data\Json\JsonDataProvider.cs" />
-    <Compile Include="Data\Models\Map.cs" />
-    <Compile Include="Data\Models\Player.cs" />
-    <Compile Include="Data\Models\Tileset.cs" />
-    <Compile Include="Data\Models\User.cs" />
+    <Compile Include="Data\Models\MapModel.cs" />
+    <Compile Include="Data\Models\PlayerModel.cs" />
+    <Compile Include="Data\Models\TilesetModel.cs" />
+    <Compile Include="Data\Models\UserModel.cs" />
     <Compile Include="Data\Models\UserLevel.cs" />
     <Compile Include="GameServer.cs" />
     <Compile Include="Accounts\LoginManager.cs" />

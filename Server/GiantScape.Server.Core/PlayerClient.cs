@@ -9,7 +9,7 @@ namespace GiantScape.Server
 {
     internal class PlayerClient
     {
-        public Player Player { get; set; }
+        public PlayerModel Player { get; set; }
         public PlayerEntity Entity { get; set; }
         public NetworkClient Client { get; set; }
     }
