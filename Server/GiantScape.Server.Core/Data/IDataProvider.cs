@@ -6,9 +6,11 @@ namespace GiantScape.Server.Data
 {
     internal interface IDataProvider
     {
-        IEnumerable<UserModel> Users { get; }
-        IEnumerable<PlayerModel> Players { get; }
-        IEnumerable<MapModel> Maps { get; }
-        IEnumerable<TilesetModel> Tilesets { get; }
+        DbCollection<UserModel> Users { get; }
+        DbCollection<PlayerModel> Players { get; }
+        DbCollection<MapModel> Maps { get; }
+        DbCollection<TilesetModel> Tilesets { get; }
+
+
     }
 }

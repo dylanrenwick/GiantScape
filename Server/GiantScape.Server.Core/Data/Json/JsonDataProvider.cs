@@ -11,10 +11,10 @@ namespace GiantScape.Server.Data.Json
 {
     internal class JsonDataProvider : IDataProvider
     {
-        public IEnumerable<UserModel> Users { get; private set; }
-        public IEnumerable<PlayerModel> Players { get; private set; }
-        public IEnumerable<MapModel> Maps { get; private set; }
-        public IEnumerable<TilesetModel> Tilesets { get; private set; }
+        public DbCollection<UserModel> Users { get; private set; }
+        public DbCollection<PlayerModel> Players { get; private set; }
+        public DbCollection<MapModel> Maps { get; private set; }
+        public DbCollection<TilesetModel> Tilesets { get; private set; }
 
         public JsonDataProvider(string jsonFilename)
         {
@@ -27,11 +27,11 @@ namespace GiantScape.Server.Data.Json
             Tilesets = ParseCollection<TilesetModel>(jsonObj["Tilesets"]);
         }
 
-        private IEnumerable<T> ParseCollection<T>(JToken json)
+        private DbCollection<T> ParseCollection<T>(JToken json) where T : BaseModel
         {
             if (json is JArray jsonArray)
             {
-                return jsonArray.Select(jToken => jToken.ToObject<T>());
+                return new DbCollection<T>(jsonArray.Select(jToken => jToken.ToObject<T>()));
             }
 
             throw new ArgumentException("Could not parse collection from token that is not array");

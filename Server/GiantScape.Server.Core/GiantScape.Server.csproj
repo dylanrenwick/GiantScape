@@ -65,6 +65,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DataStores\DataStore.cs" />
     <Compile Include="DataStores\PlayerData.cs" />
+    <Compile Include="Data\DbCollection.cs" />
     <Compile Include="Data\IDataProvider.cs" />
     <Compile Include="Data\Json\JsonDataProvider.cs" />
     <Compile Include="Data\Models\BaseModel.cs" />
