@@ -36,7 +36,9 @@ namespace GiantScape.Common.Game
 
         public TilemapData GetMapDataForPlayer(PlayerEntity player)
         {
-            return tilemapData;
+            if (!maps.ContainsKey(player.MapID)) throw new ArgumentException($"Player is on non-existant map with ID '{player.MapID}'");
+            Map map = maps[player.MapID];
+            return map.Tilemap;
         }
     }
 }
