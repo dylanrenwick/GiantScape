@@ -67,6 +67,7 @@
     <Compile Include="DataStores\PlayerData.cs" />
     <Compile Include="Data\IDataProvider.cs" />
     <Compile Include="Data\Json\JsonDataProvider.cs" />
+    <Compile Include="Data\Models\BaseModel.cs" />
     <Compile Include="Data\Models\MapModel.cs" />
     <Compile Include="Data\Models\PlayerModel.cs" />
     <Compile Include="Data\Models\TilesetModel.cs" />
