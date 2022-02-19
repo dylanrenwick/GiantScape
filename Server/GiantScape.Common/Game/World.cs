@@ -18,17 +18,17 @@ namespace GiantScape.Common.Game
             maps = new Dictionary<string, Map>();
         }
 
-        public void RegisterTileset(TilesetData tileset)
+        public void RegisterTileset(string id, TilesetData tileset)
         {
-            if (!tilesets.ContainsKey(tileset.TilesetName)) tilesets.Add(tileset.TilesetName, tileset);
-            else throw new ArgumentException($"Tileset '{tileset.TilesetName}' already registered!");
+            if (!tilesets.ContainsKey(id)) tilesets.Add(id, tileset);
+            else throw new ArgumentException($"Tileset with ID '{id}' already registered!");
         }
-        public void LoadTilemap(TilemapData tilemap)
+        public void LoadTilemap(string id, TilemapData tilemap)
         {
-            if (tilesets.ContainsKey(tilemap.Name)) throw new ArgumentException($"Tilemap with name '{tilemap.Name}' is already loaded!");
-            string tilesetName = tilemap.TilesetID;
-            if (!tilesets.ContainsKey(tilesetName)) throw new Exception($"Could not load tileset '{tilesetName}'");
-            TilesetData tileset = tilesets[tilesetName];
+            if (tilesets.ContainsKey(id)) throw new ArgumentException($"Tilemap with ID '{id}' is already loaded!");
+            string tilesetID = tilemap.TilesetID;
+            if (!tilesets.ContainsKey(tilesetID)) throw new Exception($"Could not load tileset with ID '{tilesetID}'");
+            TilesetData tileset = tilesets[tilesetID];
 
             Map map = new Map(tilemap, tileset);
             maps.Add(map.Name, map);
