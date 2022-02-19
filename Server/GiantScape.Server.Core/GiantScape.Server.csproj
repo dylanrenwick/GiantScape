@@ -91,6 +91,7 @@
     <None Include="Resources\Tilemaps\overworld.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\Tilesets\overworld.jsonc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GiantScape.Common\GiantScape.Common.csproj">
