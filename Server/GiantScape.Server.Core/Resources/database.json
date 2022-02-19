@@ -20,5 +20,12 @@
             "Name": "overworld",
             "Filename": "overworld"
         }
+    ],
+    "Tilesets": [
+        {
+            "ID": "",
+            "Name": "overworld",
+            "Filename": "overworld"
+        }
     ]
 }

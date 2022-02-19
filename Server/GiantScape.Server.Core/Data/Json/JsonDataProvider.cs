@@ -14,6 +14,7 @@ namespace GiantScape.Server.Data.Json
         public IEnumerable<User> Users { get; private set; }
         public IEnumerable<Player> Players { get; private set; }
         public IEnumerable<Map> Maps { get; private set; }
+        public IEnumerable<Tileset> Tilesets { get; private set; }
 
         public JsonDataProvider(string jsonFilename)
         {
@@ -23,6 +24,7 @@ namespace GiantScape.Server.Data.Json
             Users = ParseCollection<User>(jsonObj["Users"]);
             Players = ParseCollection<Player>(jsonObj["Players"]);
             Maps = ParseCollection<Map>(jsonObj["Maps"]);
+            Tilesets = ParseCollection<Tileset>(jsonObj["Tilesets"]);
         }
 
         private IEnumerable<T> ParseCollection<T>(JToken json)
