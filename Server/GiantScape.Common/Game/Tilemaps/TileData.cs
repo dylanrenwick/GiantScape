@@ -14,32 +14,10 @@ namespace GiantScape.Common.Game.Tilemaps
 
     public enum TileCollision : byte
     {
-        /*     */ None = 0,
-        /*     */
-        /* |X  */ Left,
-        /*     */
-        /*  X| */ Right,
-        /*  _  */
-        /*  X  */ Up,
-        /*     */
-        /*  _  */ Down,
-        /*  _  */
-        /* |X  */ UpLeft,
-        /*  _  */
-        /*  X| */ UpRight,
-        /*     */
-        /*  _| */ DownRight,
-        /*     */
-        /* |_  */ DownLeft,
-        /*     */
-        /* |_| */ OpenUp,
-        /*  _  */
-        /* |_  */ OpenRight,
-        /*  _  */
-        /* |X| */ OpenDown,
-        /*  _  */
-        /*  _| */ OpenLeft,
-        /*  _  */
-        /* |_| */ Full
+        None = 0,
+        Left = 1,
+        Right = 2,
+        Up = 4,
+        Down = 8,
     }
 }
