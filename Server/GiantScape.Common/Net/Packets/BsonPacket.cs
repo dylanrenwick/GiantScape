@@ -5,18 +5,18 @@
         private PacketType type;
         public override PacketType Type => type;
 
-        public override ushort PacketLength => PacketEncoding.GetContentsSize(MapBson);
+        public override ushort PacketLength => PacketEncoding.GetContentsSize(Bson);
 
-        public byte[] MapBson { get; private set; }
+        public byte[] Bson { get; private set; }
 
         public override void FromBytes(byte[] bytes)
         {
-            MapBson = bytes;
+            Bson = bytes;
         }
 
         public override byte[] GetContentBytes()
         {
-            return MapBson;
+            return Bson;
         }
 
         public BsonPacket(PacketType type)
@@ -26,7 +26,7 @@
         public BsonPacket(PacketType type, byte[] bson)
         {
             this.type = type;
-            MapBson = bson;
+            Bson = bson;
         }
     }
 }
