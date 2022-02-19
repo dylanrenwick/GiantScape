@@ -1,4 +1,5 @@
 {
+    "name": "overworld",
     "size": { "x": 20, "y": 10 },
     "layers": [
         {
