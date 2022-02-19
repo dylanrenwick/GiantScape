@@ -23,7 +23,7 @@ namespace GiantScape.Common.Game
             if (!tilesets.ContainsKey(tileset.TilesetName)) tilesets.Add(tileset.TilesetName, tileset);
             else throw new ArgumentException($"Tileset '{tileset.TilesetName}' already registered!");
         }
-        public void LoadMap(TilemapData tilemap)
+        public void LoadTilemap(TilemapData tilemap)
         {
             if (tilesets.ContainsKey(tilemap.Name)) throw new ArgumentException($"Tilemap with name '{tilemap.Name}' is already loaded!");
             string tilesetName = tilemap.TilesetID;
