@@ -15,5 +15,7 @@
         /* Game */
         MapRequest,
         Map,
+        TilesetRequest,
+        Tileset,
     }
 }
