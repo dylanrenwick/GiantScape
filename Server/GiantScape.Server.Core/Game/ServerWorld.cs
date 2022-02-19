@@ -33,13 +33,13 @@ namespace GiantScape.Server.Game
             var tilesetModel = LoadTilesetModel(tilesetID);
 
             LoadTileset(tilesetModel);
-            LoadTilemap(tilemap);
+            LoadTilemap(mapModel.ID, tilemap);
         }
         private void LoadTileset(TilesetModel tilesetModel)
         {
             TilesetData tileset = ResourceCache.LoadTileset(tilesetModel);
 
-            RegisterTileset(tileset);
+            RegisterTileset(tilesetModel.ID, tileset);
         }
 
         private TilesetModel LoadTilesetModel(string tilesetID)
