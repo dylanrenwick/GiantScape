@@ -11,7 +11,7 @@ using GiantScape.Common.Net.Packets;
 using GiantScape.Server.Accounts;
 using GiantScape.Server.Data;
 using GiantScape.Server.Data.Json;
-using GiantScape.Server.Data.Models;
+using GiantScape.Server.Game;
 using GiantScape.Server.Net;
 
 namespace GiantScape.Server
@@ -22,7 +22,7 @@ namespace GiantScape.Server
 
         private readonly LoginManager loginManager;
 
-        private readonly World world;
+        private readonly ServerWorld world;
 
         private readonly Dictionary<NetworkClient, PlayerClient> players;
 
@@ -39,9 +39,7 @@ namespace GiantScape.Server
             loginManager = new LoginManager(dataProvider, Log.SubLogger("LOGIN"));
             loginManager.PlayerLogin += OnPlayerLogin;
 
-            Map map = dataProvider.Maps.First();
-
-            world = new World(Log.SubLogger("WORLD"), map.Filename);
+            world = new ServerWorld(dataProvider.Maps, dataProvider, Log.SubLogger("WORLD"));
             players = new Dictionary<NetworkClient, PlayerClient>();
         }
 
