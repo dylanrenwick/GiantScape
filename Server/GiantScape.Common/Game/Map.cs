@@ -6,8 +6,8 @@ namespace GiantScape.Common.Game
     {
         public string Name => tilemap.Name;
 
-        private TilemapData tilemap;
-        private TilesetData tileset;
+        public TilemapData tilemap;
+        public TilesetData tileset;
 
         public Map(TilemapData tilemap, TilesetData tileset)
         {
