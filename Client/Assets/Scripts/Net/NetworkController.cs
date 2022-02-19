@@ -20,7 +20,7 @@ namespace GiantScape.Client.Net
         public HashSet<NetworkPacket> PacketBacklog;
 
         private NetworkClient client;
-        private UnityLogger logger = new UnityLogger();
+        private Logger logger = UnityLogger.Instance.SubLogger("NETWRK");
 
         public void SendPacket(NetworkPacket packet)
         {
