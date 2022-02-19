@@ -19,7 +19,10 @@
             return MapBson;
         }
 
-        public BsonPacket() { }
+        public BsonPacket(PacketType type)
+        {
+            this.type = type;
+        }
         public BsonPacket(PacketType type, byte[] bson)
         {
             this.type = type;
