@@ -22,7 +22,7 @@ namespace GiantScape.Common.Game
             string json = File.ReadAllText(filepath);
             log.Debug("Parsing world json...");
             tilemapData = JsonConvert.DeserializeObject<TilemapData>(json);
-            log.Debug($"Loaded {tilemapData.layers.Length} map layers");
+            log.Debug($"Loaded {tilemapData.Layers.Length} map layers");
         }
 
         public TilemapData GetMapDataForPlayer(PlayerEntity player)

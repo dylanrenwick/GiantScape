@@ -1,11 +1,14 @@
 ﻿using System;
 
+using Newtonsoft.Json;
+
 namespace GiantScape.Common.Game.Tilemaps
 {
     [Serializable]
     public class LayerData
     {
-        public int[] tiles { get; set; }
+        [JsonProperty("tiles")]
+        public int[] Tiles { get; set; }
 
         public LayerData Subregion(Vector2Int start, Vector2Int size, Vector2Int outerSize)
         {
@@ -14,10 +17,10 @@ namespace GiantScape.Common.Game.Tilemaps
             {
                 for (int x = 0; x < size.x; x++)
                 {
-                    subregionTiles[y * size.x + x] = tiles[(y + start.y) * outerSize.x + (x + start.x)];
+                    subregionTiles[y * size.x + x] = Tiles[(y + start.y) * outerSize.x + (x + start.x)];
                 }
             }
-            return new LayerData() { tiles = subregionTiles };
+            return new LayerData() { Tiles = subregionTiles };
         }
     }
 }
