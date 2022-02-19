@@ -1,6 +1,6 @@
 ﻿namespace GiantScape.Server.Data.Models
 {
-    internal class Map
+    internal class MapModel
     {
         public string ID { get; set; }
         public string Name { get; set; }

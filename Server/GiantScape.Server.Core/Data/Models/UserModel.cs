@@ -1,6 +1,6 @@
 ﻿namespace GiantScape.Server.Data.Models
 {
-    internal class User
+    internal class UserModel
     {
         public string ID { get; set; }
         public string Username { get; set; }

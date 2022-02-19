@@ -1,6 +1,6 @@
 ﻿namespace GiantScape.Server.Data.Models
 {
-    internal class Tileset
+    internal class TilesetModel
     {
         public string ID { get; set; }
         public string Name { get; set; }
