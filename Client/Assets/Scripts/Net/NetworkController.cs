@@ -1,10 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 
 using UnityEngine;
 
+using GiantScape.Common;
+using GiantScape.Common.Game.Tilemaps;
 using GiantScape.Common.Net;
 using GiantScape.Common.Net.Packets;
+
+using Logger = GiantScape.Common.Logging.Logger;
 
 namespace GiantScape.Client.Net
 {
@@ -21,6 +26,28 @@ namespace GiantScape.Client.Net
 
         private NetworkClient client;
         private Logger logger = UnityLogger.Instance.SubLogger("NETWRK");
+
+        public void GetMapData(Action<TilemapData> callback)
+        {
+            client.SendPacketWithResponse(
+                new MiscPacket(PacketType.MapRequest),
+                PacketType.Map,
+                np =>
+                {
+                    try
+                    {
+                        var bsonPacket = (BsonPacket)np;
+                        var tilemap = Serializer.Deserialize<TilemapData>(bsonPacket.Bson);
+                        callback(tilemap);
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            );
+        }
 
         public void SendPacket(NetworkPacket packet)
         {
@@ -50,7 +77,33 @@ namespace GiantScape.Client.Net
         {
             var eventState = new EventState<NetworkPacket>(e.Packet);
             PacketReceived.Invoke(eventState);
+
+            NetworkPacket packet = e.Packet;
+            switch (packet.Type)
+            {
+                case PacketType.Map:
+                case PacketType.Tileset:
+                    HandleBsonPacket((BsonPacket)packet);
+                    break;
+                default:
+                    break;
+            }
+
             if (!eventState.Handled) PacketBacklog.Add(e.Packet);
+        }
+
+        private void HandleBsonPacket(BsonPacket packet)
+        {
+            switch (packet.Type)
+            {
+                case PacketType.Map:
+                    TilemapData mapData = Serializer.Deserialize<TilemapData>(packet.Bson);
+                    break;
+                case PacketType.Tileset:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

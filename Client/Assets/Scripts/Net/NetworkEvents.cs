@@ -8,4 +8,6 @@ namespace GiantScape.Client.Net
 {
     [Serializable]
     public class PacketEvent : UnityEvent<EventState<NetworkPacket>> { }
+    [Serializable]
+    public class TilemapEvent : UnityEvent<EventState<NetworkPacket>> { }
 }
