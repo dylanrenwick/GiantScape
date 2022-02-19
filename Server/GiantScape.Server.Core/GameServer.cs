@@ -92,6 +92,9 @@ namespace GiantScape.Server
                 case PacketType.MapRequest:
                     SendWorldData(player);
                     break;
+                case PacketType.TilesetRequest:
+                    SendTilesetData(player);
+                    break;
                 default:
                     break;
             }
@@ -103,6 +106,13 @@ namespace GiantScape.Server
             TilemapData worldData = world.GetMapDataForPlayer(player.Entity);
             var mapPacket = new BsonPacket(PacketType.Map, Serializer.Serialize(worldData));
             player.Client.SendPacket(mapPacket);
+        }
+        private void SendTilesetData(PlayerClient player)
+        {
+            Log.Info($"{player.Client} Sending tileset data...");
+            TilesetData tilesetData = world.GetTilesetDataForPlayer(player.Entity);
+            var tilesetPacket = new BsonPacket(PacketType.Tileset, Serializer.Serialize(tilesetData));
+            player.Client.SendPacket(tilesetPacket);
         }
     }
 }
