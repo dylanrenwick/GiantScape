@@ -4,6 +4,8 @@ namespace GiantScape.Common.Game
 {
     public class Map
     {
+        public string Name => tilemap.Name;
+
         private TilemapData tilemap;
         private TilesetData tileset;
 
