@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,6 +72,13 @@ namespace GiantScape.Client
 
             login.LoginSuccess.AddListener(() => promise.IsDone = true);
             login.Login(username, password);
+
+            return promise;
+        }
+
+        private AsyncPromise ChangeScene()
+        {
+            var promise = new AsyncPromise();
 
             return promise;
         }
