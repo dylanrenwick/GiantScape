@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +30,8 @@ namespace GiantScape.Client
         private NetworkController network;
         [SerializeField]
         private LoadingPanel loadingPanel;
+        [SerializeField]
+        private ClientController client;
 
         public void Login(string username, string password)
         {
