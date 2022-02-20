@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 using GiantScape.Client.Net;
+using GiantScape.Client.UI;
 
 namespace GiantScape.Client
 {
@@ -26,11 +28,12 @@ namespace GiantScape.Client
         private LoginController login;
         [SerializeField]
         private NetworkController network;
+        [SerializeField]
+        private LoadingPanel loadingPanel;
 
         public void Login(string username, string password)
         {
-            login.LoginSuccess.AddListener(OnLoginSuccess);
-            login.Login(username, password);
+            StartCoroutine(LoadingCoroutine(username, password));
         }
 
         private void Start()
@@ -38,12 +41,43 @@ namespace GiantScape.Client
             DontDestroyOnLoad(this);
         }
 
-        private void OnLoginSuccess()
+        private IEnumerator LoadingCoroutine(string username, string password)
         {
-            network.GetMapData(tilemap =>
+            foreach (var stage in LoadingProcedure(username, password))
             {
+                loadingPanel.SetState(stage.Text, stage.Stage);
+                yield return null;
+            }
 
-            });
+            yield return null;
+        }
+
+        private IEnumerable<LoadingStage> LoadingProcedure(string username, string password)
+        {
+            yield return new LoadingStage { Text = "Logging in...", Stage = 0 };
+
+            AsyncPromise task = LoginAsync(username, password);
+            while (!task.IsDone) yield return new LoadingStage { Text = "Logging in...", Stage = 0.1f };
+
+            yield return new LoadingStage { Text = "Loading...", Stage = 0.5f };
+
+            yield return new LoadingStage { Text = "Done", Stage = 1 };
+        }
+
+        private AsyncPromise LoginAsync(string username, string password)
+        {
+            var promise = new AsyncPromise();
+
+            login.LoginSuccess.AddListener(() => promise.IsDone = true);
+            login.Login(username, password);
+
+            return promise;
+        }
+
+        private struct LoadingStage
+        {
+            public string Text;
+            public float Stage;
         }
     }
 }
