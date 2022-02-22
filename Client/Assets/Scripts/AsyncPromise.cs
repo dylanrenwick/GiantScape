@@ -2,7 +2,7 @@
 
 namespace GiantScape.Client
 {
-    internal class AsyncPromise
+    public class AsyncPromise
     {
         public event EventHandler Done;
 
@@ -23,7 +23,7 @@ namespace GiantScape.Client
         }
     }
 
-    internal class AsyncPromise<T> : AsyncPromise
+    public class AsyncPromise<T> : AsyncPromise
     {
         public new event EventHandler<T> Done;
 
