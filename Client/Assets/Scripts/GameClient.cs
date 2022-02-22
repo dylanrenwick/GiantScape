@@ -1,14 +1,18 @@
+﻿using System;
 using System.Net.Sockets;
 
 using GiantScape.Client.Net;
 using GiantScape.Common.Game;
 using GiantScape.Common.Logging;
 using GiantScape.Common.Net;
+using GiantScape.Common.Net.Packets;
 
 namespace GiantScape.Client
 {
     public class GameClient : Loggable
     {
+        public event EventHandler<PacketEventArgs> PacketReceived;
+
         private NetworkClient networkClient;
 
         private World world;
@@ -25,6 +29,7 @@ namespace GiantScape.Client
             var socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
             var conn = new NetworkConnection(socket, log);
             networkClient = new NetworkClient(conn, log);
+            networkClient.PacketReceived += (_, e) => PacketReceived?.Invoke(this, e);
 
             world = new World(log.SubLogger("GAMECL"));
         }
@@ -34,6 +39,19 @@ namespace GiantScape.Client
             var promise = new AsyncPromise();
             networkClient.ConnectionEstablished += (_, _2) => promise.IsDone = true;
             networkClient.BeginConnect(address, port);
+            return promise;
+        }
+
+        public AsyncPromise<NetworkPacket> SendWithResponse(NetworkPacket packet, PacketType type)
+        {
+            var promise = new AsyncPromise<NetworkPacket>();
+            networkClient.SendPacketWithResponse(packet, type, np =>
+            {
+                promise.Result = np;
+                promise.IsDone = true;
+
+                return true;
+            });
             return promise;
         }
     }
