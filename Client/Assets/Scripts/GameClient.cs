@@ -1,4 +1,4 @@
-﻿using System.Net.Sockets;
+using System.Net.Sockets;
 
 using GiantScape.Client.Net;
 using GiantScape.Common.Game;
@@ -29,9 +29,12 @@ namespace GiantScape.Client
             world = new World(log.SubLogger("GAMECL"));
         }
 
-        public void Start()
+        public AsyncPromise Start()
         {
+            var promise = new AsyncPromise();
+            networkClient.ConnectionEstablished += (_, _2) => promise.IsDone = true;
             networkClient.BeginConnect(address, port);
+            return promise;
         }
     }
 }
