@@ -19,7 +19,7 @@ namespace GiantScape.Client
 
         private void Start()
         {
-            world = new World(UnityLogger.Instance.SubLogger("WORLD");
+            world = new World(UnityLogger.Instance.SubLogger("WORLD"));
         }
     }
 }
