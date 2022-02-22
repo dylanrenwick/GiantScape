@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,11 +56,18 @@ namespace GiantScape.Client
 
         private IEnumerable<LoadingStage> LoadingProcedure(string username, string password)
         {
-            yield return new LoadingStage { Text = "Logging in...", Stage = 0 };
+            yield return new LoadingStage { Text = "Connecting...", Stage = 0 };
 
-            AsyncPromise task = LoginAsync(username, password);
+            AsyncPromise task = client.ConnectAsync();
+            while (!task.IsDone) yield return new LoadingStage { Text = "Connecting...", Stage = 0 };
+
+            yield return new LoadingStage { Text = "Connected", Stage = 0.1f };
+            yield return new LoadingStage { Text = "Logging in...", Stage = 0.1f };
+
+            task = LoginAsync(username, password);
             while (!task.IsDone) yield return new LoadingStage { Text = "Logging in...", Stage = 0.1f };
 
+            yield return new LoadingStage { Text = "Logged in", Stage = 0.2f };
             yield return new LoadingStage { Text = "Loading...", Stage = 0.5f };
 
             yield return new LoadingStage { Text = "Done", Stage = 1 };
