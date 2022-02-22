@@ -7,7 +7,7 @@ using GiantScape.Common.Net;
 
 namespace GiantScape.Client
 {
-    internal class GameClient : Loggable
+    public class GameClient : Loggable
     {
         private NetworkClient networkClient;
 
