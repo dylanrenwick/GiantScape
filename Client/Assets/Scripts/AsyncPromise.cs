@@ -19,7 +19,7 @@ namespace GiantScape.Client
 
         protected virtual void OnDone()
         {
-            Done?.Invoke(this, null);
+            Done?.Invoke(this, EventArgs.Empty);
         }
     }
 
