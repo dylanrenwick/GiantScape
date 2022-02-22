@@ -12,10 +12,10 @@ namespace GiantScape.Client.Tilemaps
 
         public Tileset Tileset { get; set; }
 
-        public Tilemap(TilemapData tilemapData, TilesetData tilesetData)
+        public Tilemap(TilemapData tilemapData, Tileset tileset)
         {
             TilemapData = tilemapData;
-            Tileset = new Tileset(tilesetData);
+            Tileset = tileset;
         }
     }
 }
