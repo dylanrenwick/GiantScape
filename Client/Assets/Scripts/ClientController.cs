@@ -1,4 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
+
+using GiantScape.Common;
+using GiantScape.Common.Game.Tilemaps;
+using GiantScape.Common.Net;
+using GiantScape.Common.Net.Packets;
 
 namespace GiantScape.Client
 {
@@ -14,6 +19,25 @@ namespace GiantScape.Client
         public AsyncPromise ConnectAsync()
         {
             return Client.Start();
+        }
+
+        public AsyncPromise<TilemapData> RequestMap()
+        {
+            var promise = new AsyncPromise<TilemapData>();
+
+            var packet = new MiscPacket(PacketType.MapRequest);
+
+            AsyncPromise<NetworkPacket> netRequest = Client.SendWithResponse(packet, PacketType.Map);
+            netRequest.Done += (_, netPacket) =>
+            {
+                if (netPacket.Type != PacketType.Map) return;
+                var bsonPacket = (BsonPacket)netPacket;
+                TilemapData data = Serializer.Deserialize<TilemapData>(bsonPacket.Bson);
+                promise.Result = data;
+                promise.IsDone = true;
+            };
+
+            return promise;
         }
 
         private void Start()
