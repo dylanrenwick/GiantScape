@@ -10,7 +10,7 @@ namespace GiantScape.Client.Tilemaps
 {
     public class Tileset
     {
-        public string TilesetName => tilesetData.tilesetName;
+        public string TilesetName => tilesetData.TilesetName;
 
         private Tile[] tiles;
 
@@ -31,9 +31,9 @@ namespace GiantScape.Client.Tilemaps
 
         public void LoadTileData()
         {
-            if (tilesetData.tiles.Length == 0 || tiles != null) return;
+            if (tilesetData.Tiles.Length == 0 || tiles != null) return;
 
-            string[] tileNames = tilesetData.tiles.Select(t => t.ResourceName).ToArray();
+            string[] tileNames = tilesetData.Tiles.Select(t => t.ResourceName).ToArray();
 
             tiles = new Tile[tileNames.Length];
 

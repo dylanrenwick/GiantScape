@@ -6,7 +6,7 @@ namespace GiantScape.Client.Tilemaps
 {
     public class Tilemap
     {
-        public Vector2Int Size => TilemapData.size.ToUnity();
+        public Vector2Int Size => TilemapData.Size.ToUnity();
 
         public TilemapData TilemapData { get; set; }
 
