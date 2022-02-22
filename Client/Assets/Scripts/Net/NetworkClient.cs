@@ -10,6 +10,7 @@ namespace GiantScape.Client.Net
 {
     public class NetworkClient : PacketClient
     {
+        public event EventHandler ConnectionEstablished;
         public event EventHandler<PacketEventArgs> PacketReceived;
 
         public bool Connected => state != ClientState.None
@@ -43,6 +44,7 @@ namespace GiantScape.Client.Net
                     break;
                 case ClientState.HandshakeSent:
                     if (packet.Type != PacketType.Ack) throw new Exception();
+                    ConnectionEstablished?.Invoke(this, EventArgs.Empty);
                     state = ClientState.Connected;
                     break;
                 case ClientState.Connected:
