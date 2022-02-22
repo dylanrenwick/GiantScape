@@ -5,7 +5,11 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 
 using GiantScape.Client.Net;
+using GiantScape.Common;
+using GiantScape.Common.Game.Tilemaps;
 using GiantScape.Common.Net.Packets;
+
+using UnityTilemap = UnityEngine.Tilemaps.Tilemap;
 
 namespace GiantScape.Client.Tilemaps
 {
@@ -14,17 +18,15 @@ namespace GiantScape.Client.Tilemaps
         [SerializeField]
         private TextAsset jsonFile;
 
-        [SerializeField]
-        private TilemapJsonConverter tilemapJsonConverter;
+        private ClientController client;
 
-        private NetworkController network;
+        private Dictionary<string, Tileset> tilesets = new Dictionary<string,Tileset>();
+        private Dictionary<string, TilemapData> tilemapsWaitingTileset = new Dictionary<string, TilemapData>();
 
         public void Import()
         {
-            if (tilemapJsonConverter == null) return;
-
             Debug.Log("Importing from file...");
-            tilemapJsonConverter.LoadJson(StripComments(jsonFile.text), Vector2Int.zero);
+            TilemapData data = Serializer.Deserialize<TilemapData>(StripComments(jsonFile.text));
         }
 
 #if UNITY_EDITOR
@@ -34,35 +36,50 @@ namespace GiantScape.Client.Tilemaps
         }
 #endif
 
-        public void OnPacketReceived(EventState<NetworkPacket> state)
+        public void OnPacketReceived(object sender, PacketEventArgs e)
         {
-            var packet = state.State;
+            var packet = e.Packet;
             if (packet.Type == PacketType.Map)
             {
                 var mapPacket = (BsonPacket)packet;
-                LoadMapFromPacket(mapPacket);
-                state.Handled = true;
+                TilemapData data = Serializer.Deserialize<TilemapData>(mapPacket.Bson);
+                if (tilesets.ContainsKey(data.TilesetID))
+                {
+                    Tilemap tilemap = new Tilemap(data, tilesets[data.TilesetID]);
+                }
+                else
+                {
+                    RequestTileset(data.TilesetID);
+                    tilemapsWaitingTileset.Add(data.TilesetID, data);
+                }
+            }
+            else if (packet.Type == PacketType.Tileset)
+            {
+                var tilesetPacket = (BsonPacket)packet;
+                TilesetData data = Serializer.Deserialize<TilesetData>(tilesetPacket.Bson);
+                RegisterTileset(data);
             }
         }
 
         private void Start()
         {
-            network = GameObject.Find("NetworkController").GetComponent<NetworkController>();
-            network.PacketReceived.AddListener(OnPacketReceived);
-            IEnumerable<BsonPacket> queuedMapPackets = network.PacketBacklog
-                .Where(packet => packet.Type == PacketType.Map)
-                .Cast<BsonPacket>().ToList();
-
-            foreach (BsonPacket packet in queuedMapPackets)
-            {
-                LoadMapFromPacket(packet);
-                network.PacketBacklog.Remove(packet);
-            }
+            client = GameObject.Find("Controller").GetComponent<ClientController>();
+            client.Client.PacketReceived += OnPacketReceived;
         }
 
-        private void LoadMapFromPacket(BsonPacket packet)
+        public void RegisterTileset(TilesetData data)
         {
-            tilemapJsonConverter.LoadBson(packet.MapBson, Vector2Int.zero);
+            var tileset = new Tileset(data);
+            RegisterTileset(tileset);
+        }
+        public void RegisterTileset(Tileset tileset)
+        {
+            tilesets.Add(tileset.TilesetName, tileset);
+        }
+
+        public void RequestTileset(string tilesetID)
+        {
+
         }
 
         private static Regex commentRegex = new Regex("\\/\\*.*?\\*\\/");
@@ -70,6 +87,19 @@ namespace GiantScape.Client.Tilemaps
         private static string StripComments(string json)
         {
             return commentRegex.Replace(json, string.Empty);
+        }
+
+        private void LoadDataToTilemap(LayerData layer, UnityTilemap tilemap, Tileset tileset, Vector2Int offset)
+        {
+            for (int y = 0; y < Size.y; y++)
+            {
+                for (int x = 0; x < Size.x; x++)
+                {
+                    var tile = tileset.GetTile(layer.tiles[y * Size.x + x]);
+                    var tilemapPos = new Vector3Int(x + offset.x, (Size.y - y) + offset.y, 0);
+                    tilemap.SetTile(tilemapPos, tile);
+                }
+            }
         }
     }
 }
