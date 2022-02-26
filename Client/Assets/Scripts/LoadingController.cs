@@ -39,10 +39,13 @@ namespace GiantScape.Client
         private void Start()
         {
             DontDestroyOnLoad(this);
+            loadingPanel.Hide();
         }
 
         private IEnumerator LoadingCoroutine(string username, string password)
         {
+            loadingPanel.Show();
+
             foreach (var stage in LoadingProcedure(username, password))
             {
                 loadingPanel.SetState(stage.Text, stage.Stage);
