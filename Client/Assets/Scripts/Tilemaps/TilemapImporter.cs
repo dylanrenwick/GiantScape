@@ -28,7 +28,7 @@ namespace GiantScape.Client.Tilemaps
         public void Import()
         {
             Debug.Log("Importing from file...");
-            TilemapData data = Serializer.Deserialize<TilemapData>(StripComments(jsonFile.text));
+            TilemapData data = Serializer.Deserialize<TilemapData>(jsonFile.text);
         }
 
 #if UNITY_EDITOR
@@ -82,13 +82,6 @@ namespace GiantScape.Client.Tilemaps
         public void RequestTileset(string tilesetID)
         {
 
-        }
-
-        private static Regex commentRegex = new Regex("\\/\\*.*?\\*\\/");
-
-        private static string StripComments(string json)
-        {
-            return commentRegex.Replace(json, string.Empty);
         }
 
         private void LoadDataToTilemap(LayerData layer, UnityTilemap tilemap, Tileset tileset, Vector2Int offset)

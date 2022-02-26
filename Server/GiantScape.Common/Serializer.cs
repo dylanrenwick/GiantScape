@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text.RegularExpressions;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
@@ -7,6 +8,8 @@ namespace GiantScape.Common
 {
     public static class Serializer
     {
+        private static Regex commentRegex = new Regex("\\/\\*.*?\\*\\/");
+
         public static byte[] Serialize(object target)
         {
             var mem = new MemoryStream();
@@ -37,7 +40,13 @@ namespace GiantScape.Common
 
         public static T Deserialize<T>(string json)
         {
+            json = StripComments(json);
             return JsonConvert.DeserializeObject<T>(json);
+        }
+
+        private static string StripComments(string json)
+        {
+            return commentRegex.Replace(json, string.Empty);
         }
     }
 }
