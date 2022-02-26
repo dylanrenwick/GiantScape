@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Net.Sockets;
 
@@ -111,13 +111,10 @@ namespace GiantScape.Common.Net.Packets
                     var strPacket = new StringPacket(type);
                     strPacket.FromBytes(packet);
                     return strPacket;
-                case PacketType.Map:
-                case PacketType.Tileset:
-                    var bsonPacket = new BinaryPacket(type);
-                    bsonPacket.FromBytes(packet);
-                    return bsonPacket;
                 default:
-                    return new BinaryPacket(type);
+                    var binPacket = new BinaryPacket(type);
+                    binPacket.FromBytes(packet);
+                    return binPacket;
             }
         }
     }
