@@ -25,6 +25,13 @@ namespace GiantScape.Server.Game
             }
         }
 
+        public void CreatePlayer(PlayerClient client)
+        {
+            var player = new PlayerEntity(client.Data.MapID);
+            client.Entity = player;
+            RegisterEntity(player);
+        }
+
         private void LoadMap(MapModel mapModel)
         {
             TilemapData tilemap = ResourceCache.LoadMap(mapModel);
