@@ -38,23 +38,10 @@ namespace GiantScape.Client.Tilemaps
         }
 #endif
 
-        public void OnPacketReceived(object sender, PacketEventArgs e)
+        public void RegisterTilemap(TilemapData tilemap)
         {
-            var packet = e.Packet;
-            if (packet.Type == PacketType.Map)
-            {
-                var mapPacket = (BinaryPacket)packet;
-                TilemapData data = Serializer.Deserialize<TilemapData>(mapPacket.Content);
-                RegisterTilemap(data, data.TilesetID);
-            }
-            else if (packet.Type == PacketType.Tileset)
-            {
-                var tilesetPacket = (BinaryPacket)packet;
-                TilesetData data = Serializer.Deserialize<TilesetData>(tilesetPacket.Content);
-                RegisterTileset(data);
-            }
+            RegisterTilemap(tilemap, tilemap.TilesetID);
         }
-
         public void RegisterTilemap(TilemapData tilemap, string tileset)
         {
             if (tilesets.ContainsKey(tileset))
@@ -113,7 +100,7 @@ namespace GiantScape.Client.Tilemaps
         private void Start()
         {
             client = GameObject.Find("Controller").GetComponent<ClientController>();
-            RequestTilemap();
+            StartCoroutine(RequestTilemap());
         }
 
         private void ResolveWaitingTilemaps(Tileset tileset)
