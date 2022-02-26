@@ -8,6 +8,7 @@ using GiantScape.Common.Logging;
 using GiantScape.Common.Net.Packets;
 using GiantScape.Server.Accounts;
 using GiantScape.Server.Data;
+using GiantScape.Server.DataStores;
 using GiantScape.Server.Data.Json;
 using GiantScape.Server.Game;
 using GiantScape.Server.Net;
@@ -67,6 +68,8 @@ namespace GiantScape.Server
 
             if (players.ContainsKey(client)) players[client] = player;
             else players.Add(client, player);
+
+            player.Data = DataStore.FromFile(player.Player.DataStoreFilename);
         }
 
         private void OnPacketReceived(object sender, PacketEventArgs e)
