@@ -11,11 +11,14 @@ namespace GiantScape.Common.Game
         private Dictionary<string, TilesetData> tilesets;
         private Dictionary<string, Map> maps;
 
+        private HashSet<GameEntity> entities;
+
         public World(Logger log)
             : base(log)
         {
             tilesets = new Dictionary<string, TilesetData>();
             maps = new Dictionary<string, Map>();
+            entities = new HashSet<GameEntity>();
         }
 
         public void RegisterTileset(string id, TilesetData tileset)
@@ -48,6 +51,11 @@ namespace GiantScape.Common.Game
             if (!maps.ContainsKey(player.MapID)) throw new ArgumentException($"Player is on non-existant map with ID '{player.MapID}'");
             Map map = maps[player.MapID];
             return map.Tileset;
+        }
+
+        public void RegisterEntity(GameEntity entity)
+        {
+            entities.Add(entity);
         }
     }
 }
