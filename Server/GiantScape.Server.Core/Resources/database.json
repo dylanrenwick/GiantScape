@@ -1,12 +1,12 @@
 {
     "Users": [
-        {
-            "ID": "f352f76d-8136-424a-aa45-39868f32d3fa",
-            "Username": "Mayube",
-            "Email": "skidsirongenesisdev@gmail.com",
-            "PasswordHash": "e6c83b282aeb2e022844595721cc00bbda47cb24537c1779f9bb84f04039e1676e6ba8573e588da1052510e3aa0a32a9e55879ae22b0c2d62136fc0a3e85f8bb",
-            "Level": 0
-        }
+      {
+        "ID": "f352f76d-8136-424a-aa45-39868f32d3fa",
+        "Username": "Mayube",
+        "Email": "skidsirongenesisdev@gmail.com",
+        "PasswordHash": "125d6d03b32c84d492747f79cf0bf6e179d287f341384eb5d6d3197525ad6be8e6df0116032935698f99a09e265073d1d6c32c274591bf1d0a20ad67cba921bc",
+        "Level": 0
+      }
     ],
     "Players": [
         {
