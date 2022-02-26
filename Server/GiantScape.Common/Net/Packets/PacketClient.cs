@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 using GiantScape.Common.Logging;
@@ -48,9 +49,9 @@ namespace GiantScape.Common.Net.Packets
             packetCallbacks.Add(callback);
             SendPacket(packet);
         }
-        public void SendPacketWithResponse(NetworkPacket packet, PacketType responseType, Func<NetworkPacket, bool> callback)
+        public void SendPacketWithResponse(NetworkPacket packet, PacketType[] responseTypes, Func<NetworkPacket, bool> callback)
         {
-            SendPacketWithResponse(packet, np => (np.Type == responseType) && callback(np));
+            SendPacketWithResponse(packet, np => responseTypes.Any(type => type == np.Type) && callback(np));
         }
 
         public override string ToString()

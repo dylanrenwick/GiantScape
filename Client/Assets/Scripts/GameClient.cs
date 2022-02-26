@@ -42,10 +42,10 @@ namespace GiantScape.Client
             return promise;
         }
 
-        public AsyncPromise<NetworkPacket> SendWithResponse(NetworkPacket packet, PacketType type)
+        public AsyncPromise<NetworkPacket> SendWithResponse(NetworkPacket packet, params PacketType[] types)
         {
             var promise = new AsyncPromise<NetworkPacket>();
-            networkClient.SendPacketWithResponse(packet, type, np =>
+            networkClient.SendPacketWithResponse(packet, types, np =>
             {
                 promise.Result = np;
                 promise.IsDone = true;
