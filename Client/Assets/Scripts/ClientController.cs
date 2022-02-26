@@ -39,11 +39,11 @@ namespace GiantScape.Client
             return promise;
         }
 
-        public AsyncPromise<TilesetData> RequestTileset()
+        public AsyncPromise<TilesetData> RequestTileset(string tilesetID)
         {
             var promise = new AsyncPromise<TilesetData>();
 
-            var packet = new BinaryPacket(PacketType.TilesetRequest);
+            var packet = new StringPacket(PacketType.TilesetRequest, tilesetID);
 
             AsyncPromise<NetworkPacket> netRequest = Client.SendWithResponse(packet, PacketType.Tileset);
             netRequest.Done += (_, netPacket) =>
