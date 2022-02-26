@@ -42,14 +42,14 @@ namespace GiantScape.Client.Tilemaps
             var packet = e.Packet;
             if (packet.Type == PacketType.Map)
             {
-                var mapPacket = (BsonPacket)packet;
-                TilemapData data = Serializer.Deserialize<TilemapData>(mapPacket.Bson);
+                var mapPacket = (BinaryPacket)packet;
+                TilemapData data = Serializer.Deserialize<TilemapData>(mapPacket.Content);
                 RegisterTilemap(data, data.TilesetID);
             }
             else if (packet.Type == PacketType.Tileset)
             {
-                var tilesetPacket = (BsonPacket)packet;
-                TilesetData data = Serializer.Deserialize<TilesetData>(tilesetPacket.Bson);
+                var tilesetPacket = (BinaryPacket)packet;
+                TilesetData data = Serializer.Deserialize<TilesetData>(tilesetPacket.Content);
                 RegisterTileset(data);
             }
         }

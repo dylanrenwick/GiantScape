@@ -25,13 +25,13 @@ namespace GiantScape.Client
         {
             var promise = new AsyncPromise<TilemapData>();
 
-            var packet = new MiscPacket(PacketType.MapRequest);
+            var packet = new BinaryPacket(PacketType.MapRequest);
 
             AsyncPromise<NetworkPacket> netRequest = Client.SendWithResponse(packet, PacketType.Map);
             netRequest.Done += (_, netPacket) =>
             {
-                var bsonPacket = (BsonPacket)netPacket;
-                TilemapData data = Serializer.Deserialize<TilemapData>(bsonPacket.Bson);
+                var bsonPacket = (BinaryPacket)netPacket;
+                TilemapData data = Serializer.Deserialize<TilemapData>(bsonPacket.Content);
                 promise.Result = data;
                 promise.IsDone = true;
             };
@@ -43,13 +43,13 @@ namespace GiantScape.Client
         {
             var promise = new AsyncPromise<TilesetData>();
 
-            var packet = new MiscPacket(PacketType.TilesetRequest);
+            var packet = new BinaryPacket(PacketType.TilesetRequest);
 
             AsyncPromise<NetworkPacket> netRequest = Client.SendWithResponse(packet, PacketType.Tileset);
             netRequest.Done += (_, netPacket) =>
             {
-                var bsonPacket = (BsonPacket)netPacket;
-                TilesetData data = Serializer.Deserialize<TilesetData>(bsonPacket.Bson);
+                var bsonPacket = (BinaryPacket)netPacket;
+                TilesetData data = Serializer.Deserialize<TilesetData>(bsonPacket.Content);
                 promise.Result = data;
                 promise.IsDone = true;
             };

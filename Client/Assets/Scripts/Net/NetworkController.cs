@@ -30,14 +30,14 @@ namespace GiantScape.Client.Net
         public void GetMapData(Action<TilemapData> callback)
         {
             client.SendPacketWithResponse(
-                new MiscPacket(PacketType.MapRequest),
+                new BinaryPacket(PacketType.MapRequest),
                 PacketType.Map,
                 np =>
                 {
                     try
                     {
-                        var bsonPacket = (BsonPacket)np;
-                        var tilemap = Serializer.Deserialize<TilemapData>(bsonPacket.Bson);
+                        var bsonPacket = (BinaryPacket)np;
+                        var tilemap = Serializer.Deserialize<TilemapData>(bsonPacket.Content);
                         callback(tilemap);
                         return true;
                     }
@@ -83,7 +83,7 @@ namespace GiantScape.Client.Net
             {
                 case PacketType.Map:
                 case PacketType.Tileset:
-                    HandleBsonPacket((BsonPacket)packet);
+                    HandleBinaryPacket((BinaryPacket)packet);
                     break;
                 default:
                     break;
@@ -92,12 +92,12 @@ namespace GiantScape.Client.Net
             if (!eventState.Handled) PacketBacklog.Add(e.Packet);
         }
 
-        private void HandleBsonPacket(BsonPacket packet)
+        private void HandleBinaryPacket(BinaryPacket packet)
         {
             switch (packet.Type)
             {
                 case PacketType.Map:
-                    TilemapData mapData = Serializer.Deserialize<TilemapData>(packet.Bson);
+                    TilemapData mapData = Serializer.Deserialize<TilemapData>(packet.Content);
                     break;
                 case PacketType.Tileset:
                     break;
