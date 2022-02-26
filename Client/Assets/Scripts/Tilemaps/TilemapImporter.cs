@@ -15,6 +15,8 @@ namespace GiantScape.Client.Tilemaps
 {
     public class TilemapImporter : MonoBehaviour
     {
+        public Vector2Int Size;
+
         [SerializeField]
         private TextAsset jsonFile;
 
