@@ -26,9 +26,7 @@ namespace GiantScape.Common.Game
         public void LoadTilemap(string id, TilemapData tilemap)
         {
             if (tilesets.ContainsKey(id)) throw new ArgumentException($"Tilemap with ID '{id}' is already loaded!");
-            string tilesetID = tilemap.TilesetID;
-            if (!tilesets.ContainsKey(tilesetID)) throw new Exception($"Could not load tileset with ID '{tilesetID}'");
-            TilesetData tileset = tilesets[tilesetID];
+            TilesetData tileset = GetTilesetData(tilemap.TilesetID);
 
             Map map = new Map(tilemap, tileset);
             maps.Add(map.Name, map);
@@ -39,6 +37,11 @@ namespace GiantScape.Common.Game
             if (!maps.ContainsKey(player.MapID)) throw new ArgumentException($"Player is on non-existant map with ID '{player.MapID}'");
             Map map = maps[player.MapID];
             return map.Tilemap;
+        }
+        public TilesetData GetTilesetData(string id)
+        {
+            if (!tilesets.ContainsKey(id)) throw new Exception($"Could not load tileset with ID '{id}'");
+            return tilesets[id];
         }
         public TilesetData GetTilesetDataForPlayer(PlayerEntity player)
         {
