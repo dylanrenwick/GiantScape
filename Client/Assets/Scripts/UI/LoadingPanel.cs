@@ -14,14 +14,14 @@ namespace GiantScape.Client.UI
         public void Hide() => SetVisibility(false);
         public void SetVisibility(bool vis)
         {
-            loadingText.gameObject.SetActive(vis);
-            loadingBar.gameObject.SetActive(vis);
+            if (loadingText != null) loadingText.gameObject.SetActive(vis);
+            if (loadingBar != null) loadingBar.gameObject.SetActive(vis);
         }
 
         public void SetState(string text, float barValue)
         {
-            loadingText.text = text;
-            loadingBar.value = barValue;
+            if (loadingText != null) loadingText.text = text;
+            if (loadingBar != null) loadingBar.value = barValue;
         }
     }
 }
