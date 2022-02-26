@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 using GiantScape.Common;
 using GiantScape.Common.Game.Tilemaps;
@@ -32,6 +32,24 @@ namespace GiantScape.Client
             {
                 var bsonPacket = (BsonPacket)netPacket;
                 TilemapData data = Serializer.Deserialize<TilemapData>(bsonPacket.Bson);
+                promise.Result = data;
+                promise.IsDone = true;
+            };
+
+            return promise;
+        }
+
+        public AsyncPromise<TilesetData> RequestTileset()
+        {
+            var promise = new AsyncPromise<TilesetData>();
+
+            var packet = new MiscPacket(PacketType.TilesetRequest);
+
+            AsyncPromise<NetworkPacket> netRequest = Client.SendWithResponse(packet, PacketType.Tileset);
+            netRequest.Done += (_, netPacket) =>
+            {
+                var bsonPacket = (BsonPacket)netPacket;
+                TilesetData data = Serializer.Deserialize<TilesetData>(bsonPacket.Bson);
                 promise.Result = data;
                 promise.IsDone = true;
             };
