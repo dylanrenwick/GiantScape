@@ -65,23 +65,13 @@ namespace GiantScape.Client
             yield return new LoadingStage { Text = "Connected", Stage = 0.1f };
             yield return new LoadingStage { Text = "Logging in...", Stage = 0.1f };
 
-            task = LoginAsync(username, password);
+            task = login.Login(username, password);
             while (!task.IsDone) yield return new LoadingStage { Text = "Logging in...", Stage = 0.1f };
 
             yield return new LoadingStage { Text = "Logged in", Stage = 0.2f };
             yield return new LoadingStage { Text = "Loading...", Stage = 0.5f };
 
             yield return new LoadingStage { Text = "Done", Stage = 1 };
-        }
-
-        private AsyncPromise LoginAsync(string username, string password)
-        {
-            var promise = new AsyncPromise();
-
-            login.LoginSuccess.AddListener(() => promise.IsDone = true);
-            login.Login(username, password);
-
-            return promise;
         }
 
         private AsyncPromise ChangeScene()
