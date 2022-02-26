@@ -50,7 +50,7 @@ namespace GiantScape.Server.DataStores
         {
             DataStore dataStore = new DataStore();
 
-            dataStore.MapID = "13a3afd9-7408-45b1-97bc-87f13bff024d";
+            dataStore.MapID = "overworld";
             dataStore.Position = new Vector2Int(8, 5);
 
             return dataStore;
