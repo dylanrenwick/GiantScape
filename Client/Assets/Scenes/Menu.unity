@@ -692,6 +692,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 427593423}
+  - component: {fileID: 427593424}
   m_Layer: 5
   m_Name: Loading
   m_TagString: Untagged
@@ -720,6 +721,20 @@ RectTransform:
   m_AnchoredPosition: {x: -0.51000977, y: -508.89}
   m_SizeDelta: {x: 649.32, y: 52.36}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &427593424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427593422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33a68c8dfa3e8e44bba9edf36577559, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadingText: {fileID: 101382506}
+  loadingBar: {fileID: 1260681713}
 --- !u!1 &461212679
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,9 +824,9 @@ GameObject:
   m_Component:
   - component: {fileID: 505677929}
   - component: {fileID: 505677930}
-  - component: {fileID: 505677928}
   - component: {fileID: 505677931}
   - component: {fileID: 505677932}
+  - component: {fileID: 505677933}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -819,23 +834,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &505677928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 505677927}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 218456b65ef02fa43838a67b272e2a32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  address: 127.0.0.1
-  port: 17000
-  PacketReceived:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &505677929
 Transform:
   m_ObjectHideFlags: 0
@@ -874,10 +872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb48d1cbea740aa40ac0d80240c73a05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  network: {fileID: 505677928}
-  LoginSuccess:
-    m_PersistentCalls:
-      m_Calls: []
+  client: {fileID: 505677932}
 --- !u!114 &505677932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -892,6 +887,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   address: 127.0.0.1
   port: 17000
+--- !u!114 &505677933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505677927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5f3abea6529a4c4cbea7bc7c160629e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  login: {fileID: 505677931}
+  loadingPanel: {fileID: 427593424}
+  client: {fileID: 505677932}
 --- !u!1 &660048029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1655,7 +1665,7 @@ MonoBehaviour:
   usernameField: {fileID: 1165359154}
   passwordField: {fileID: 387136652}
   errorText: {fileID: 1901816288}
-  loadingController: {fileID: 0}
+  loadingController: {fileID: 505677933}
 --- !u!114 &1901320420
 MonoBehaviour:
   m_ObjectHideFlags: 0
