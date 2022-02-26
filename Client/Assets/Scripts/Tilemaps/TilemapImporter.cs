@@ -6,7 +6,6 @@ using UnityEngine;
 
 using GiantScape.Common;
 using GiantScape.Common.Game.Tilemaps;
-using GiantScape.Common.Net.Packets;
 
 using UnityTilemap = UnityEngine.Tilemaps.Tilemap;
 
@@ -14,8 +13,6 @@ namespace GiantScape.Client.Tilemaps
 {
     public class TilemapImporter : MonoBehaviour
     {
-        public Vector2Int Size;
-
         [SerializeField]
         private TextAsset jsonFile;
 
@@ -100,7 +97,6 @@ namespace GiantScape.Client.Tilemaps
         private void Start()
         {
             client = GameObject.Find("Controller").GetComponent<ClientController>();
-            StartCoroutine(RequestTilemap());
         }
 
         private void ResolveWaitingTilemaps(Tileset tileset)
@@ -126,19 +122,6 @@ namespace GiantScape.Client.Tilemaps
                 var list = new List<TilemapData>();
                 list.Add(tilemap);
                 tilemapsWaitingTileset.Add(tileset, list);
-            }
-        }
-
-        private void LoadDataToTilemap(LayerData layer, UnityTilemap tilemap, Tileset tileset, Vector2Int offset)
-        {
-            for (int y = 0; y < Size.y; y++)
-            {
-                for (int x = 0; x < Size.x; x++)
-                {
-                    var tile = tileset.GetTile(layer.Tiles[y * Size.x + x]);
-                    var tilemapPos = new Vector3Int(x + offset.x, (Size.y - y) + offset.y, 0);
-                    tilemap.SetTile(tilemapPos, tile);
-                }
             }
         }
     }
