@@ -12,12 +12,12 @@ namespace GiantScape.Common.Game.Tilemaps
 
         public LayerData Subregion(Vector2Int start, Vector2Int size, Vector2Int outerSize)
         {
-            int[] subregionTiles = new int[size.x * size.y];
-            for (int y = 0; y < size.y; y++)
+            int[] subregionTiles = new int[size.X * size.Y];
+            for (int y = 0; y < size.Y; y++)
             {
-                for (int x = 0; x < size.x; x++)
+                for (int x = 0; x < size.X; x++)
                 {
-                    subregionTiles[y * size.x + x] = Tiles[(y + start.y) * outerSize.x + (x + start.x)];
+                    subregionTiles[y * size.X + x] = Tiles[(y + start.Y) * outerSize.X + (x + start.X)];
                 }
             }
             return new LayerData() { Tiles = subregionTiles };
