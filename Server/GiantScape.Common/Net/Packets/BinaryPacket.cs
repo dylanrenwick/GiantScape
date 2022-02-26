@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace GiantScape.Common.Net.Packets
 {
@@ -26,6 +26,11 @@ namespace GiantScape.Common.Net.Packets
         }
         public BinaryPacket(byte[] content)
         {
+            this.content = content;
+        }
+        public BinaryPacket(PacketType type, byte[] content)
+        {
+            this.type = type;
             this.content = content;
         }
     }
