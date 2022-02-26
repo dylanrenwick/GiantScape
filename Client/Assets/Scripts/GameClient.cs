@@ -54,5 +54,10 @@ namespace GiantScape.Client
             });
             return promise;
         }
+
+        public void Close(string reason)
+        {
+            networkClient.Close(reason);
+        }
     }
 }

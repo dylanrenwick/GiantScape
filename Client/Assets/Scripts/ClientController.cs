@@ -69,5 +69,10 @@ namespace GiantScape.Client
         {
             Client = new GameClient(address, port, UnityLogger.Instance.SubLogger("GAMESV"));
         }
+
+        private void OnDestroy()
+        {
+            Client.Close("Client shutting down");
+        }
     }
 }
