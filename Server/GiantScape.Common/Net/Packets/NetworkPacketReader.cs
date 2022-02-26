@@ -112,7 +112,7 @@ namespace GiantScape.Common.Net.Packets
                     return login;
                 case PacketType.Map:
                 case PacketType.Tileset:
-                    var bsonPacket = new BsonPacket(type);
+                    var bsonPacket = new BinaryPacket(type);
                     bsonPacket.FromBytes(packet);
                     return bsonPacket;
                 default:

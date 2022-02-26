@@ -65,7 +65,6 @@
     <Compile Include="Net\NetworkEventArgs.cs" />
     <Compile Include="Net\Packets\HandshakePacket.cs" />
     <Compile Include="Net\Packets\LoginPacket.cs" />
-    <Compile Include="Net\Packets\BsonPacket.cs" />
     <Compile Include="Net\Packets\BinaryPacket.cs" />
     <Compile Include="Net\Packets\NetworkPacket.cs" />
     <Compile Include="Net\Packets\NetworkPacketReader.cs" />
