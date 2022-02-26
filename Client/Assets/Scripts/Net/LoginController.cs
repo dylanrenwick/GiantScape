@@ -12,20 +12,15 @@ namespace GiantScape.Client.Net
     internal class LoginController : MonoBehaviour
     {
         [SerializeField]
-        private NetworkController network;
-
-        public UnityEvent LoginSuccess;
+        private ClientController client;
 
         private HashAlgorithm hash;
 
-        public void Login(string username, string password)
+        public AsyncPromise Login(string username, string password)
         {
             string passwordHash = HashPassword(password);
 
-            var loginPacket = new LoginPacket(username, passwordHash);
-            network.PacketReceived.AddListener(OnPacketReceived);
-
-            network.SendPacket(loginPacket);
+            return client.Login(username, passwordHash);
         }
 
         private void Start()
@@ -38,16 +33,6 @@ namespace GiantScape.Client.Net
             byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
             byte[] hashBytes = hash.ComputeHash(passwordBytes);
             return ByteArrayToString(hashBytes);
-        }
-
-        private void OnPacketReceived(EventState<NetworkPacket> state)
-        {
-            var packet = state.State;
-            if (packet.Type == PacketType.LoginSuccess)
-            {
-                LoginSuccess.Invoke();
-                state.Handled = true;
-            }
         }
 
         private static string ByteArrayToString(byte[] ba)
