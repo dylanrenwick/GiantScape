@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Net.Sockets;
 
@@ -98,10 +98,6 @@ namespace GiantScape.Common.Net.Packets
             {
                 case PacketType.None:
                     return new BinaryPacket(packet);
-                case PacketType.Close:
-                    var close = new StringPacket(type);
-                    close.FromBytes(packet);
-                    return close;
                 case PacketType.Handshake:
                     var handshake = new HandshakePacket();
                     handshake.FromBytes(packet);
@@ -110,6 +106,11 @@ namespace GiantScape.Common.Net.Packets
                     var login = new LoginPacket();
                     login.FromBytes(packet);
                     return login;
+                case PacketType.TilesetRequest:
+                case PacketType.Close:
+                    var strPacket = new StringPacket(type);
+                    strPacket.FromBytes(packet);
+                    return strPacket;
                 case PacketType.Map:
                 case PacketType.Tileset:
                     var bsonPacket = new BinaryPacket(type);
