@@ -8,7 +8,7 @@ namespace GiantScape.Client
     {
         public static Vector2IntUnity ToUnity(this Vector2Int self)
         {
-            return new Vector2IntUnity(self.x, self.y);
+            return new Vector2IntUnity(self.X, self.Y);
         }
     }
 }
