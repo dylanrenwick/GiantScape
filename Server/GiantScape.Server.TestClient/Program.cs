@@ -59,7 +59,7 @@ namespace GiantScape.Server.TestClient
             switch (packet.Type)
             {
                 case PacketType.Close:
-                    HandleClose((ClosePacket)packet);
+                    HandleClose((StringPacket)packet);
                     break;
                 case PacketType.Handshake:
                     HandleHandshake((HandshakePacket)packet);
@@ -76,10 +76,10 @@ namespace GiantScape.Server.TestClient
             stream.WritePacket(packet);
         }
 
-        private static void HandleClose(ClosePacket packet)
+        private static void HandleClose(StringPacket packet)
         {
             logger.Info("Received close packet, closing connection");
-            logger.Info($"Reason: '{(packet).Reason}'");
+            logger.Info($"Reason: '{packet.StringVal}'");
             socket.Close();
         }
     }

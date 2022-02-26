@@ -104,14 +104,14 @@ namespace GiantScape.Server
         {
             Log.Info($"{player.Client} Sending world data...");
             TilemapData worldData = world.GetMapDataForPlayer(player.Entity);
-            var mapPacket = new BsonPacket(PacketType.Map, Serializer.Serialize(worldData));
+            var mapPacket = new BinaryPacket(PacketType.Map, Serializer.Serialize(worldData));
             player.Client.SendPacket(mapPacket);
         }
         private void SendTilesetData(PlayerClient player)
         {
             Log.Info($"{player.Client} Sending tileset data...");
             TilesetData tilesetData = world.GetTilesetDataForPlayer(player.Entity);
-            var tilesetPacket = new BsonPacket(PacketType.Tileset, Serializer.Serialize(tilesetData));
+            var tilesetPacket = new BinaryPacket(PacketType.Tileset, Serializer.Serialize(tilesetData));
             player.Client.SendPacket(tilesetPacket);
         }
     }
