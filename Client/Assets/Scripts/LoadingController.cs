@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using GiantScape.Client.Net;
 using GiantScape.Client.UI;
@@ -71,12 +72,18 @@ namespace GiantScape.Client
             yield return new LoadingStage { Text = "Logged in", Stage = 0.2f };
             yield return new LoadingStage { Text = "Loading...", Stage = 0.5f };
 
+            task = ChangeScene();
+            while (!task.IsDone) yield return new LoadingStage { Text = "Loading...", Stage = 0.6f };
+
             yield return new LoadingStage { Text = "Done", Stage = 1 };
         }
 
         private AsyncPromise ChangeScene()
         {
             var promise = new AsyncPromise();
+
+            SceneManager.activeSceneChanged += (s, e) => promise.IsDone = true;
+            SceneManager.LoadSceneAsync("Main");
 
             return promise;
         }
