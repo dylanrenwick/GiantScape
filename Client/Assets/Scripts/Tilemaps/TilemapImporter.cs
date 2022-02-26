@@ -20,8 +20,9 @@ namespace GiantScape.Client.Tilemaps
 
         private ClientController client;
 
-        private Dictionary<string, Tileset> tilesets = new Dictionary<string,Tileset>();
-        private Dictionary<string, TilemapData> tilemapsWaitingTileset = new Dictionary<string, TilemapData>();
+        private Dictionary<string, Tileset> tilesets = new Dictionary<string, Tileset>();
+        private Dictionary<string, Tilemap> tilemaps = new Dictionary<string, Tilemap>();
+        private Dictionary<string, List<TilemapData>> tilemapsWaitingTileset = new Dictionary<string, List<TilemapData>>();
 
         public void Import()
         {
@@ -43,15 +44,7 @@ namespace GiantScape.Client.Tilemaps
             {
                 var mapPacket = (BsonPacket)packet;
                 TilemapData data = Serializer.Deserialize<TilemapData>(mapPacket.Bson);
-                if (tilesets.ContainsKey(data.TilesetID))
-                {
-                    Tilemap tilemap = new Tilemap(data, tilesets[data.TilesetID]);
-                }
-                else
-                {
-                    RequestTileset(data.TilesetID);
-                    tilemapsWaitingTileset.Add(data.TilesetID, data);
-                }
+                RegisterTilemap(data, data.TilesetID);
             }
             else if (packet.Type == PacketType.Tileset)
             {
@@ -67,6 +60,28 @@ namespace GiantScape.Client.Tilemaps
             client.Client.PacketReceived += OnPacketReceived;
         }
 
+        public void RegisterTilemap(TilemapData tilemap, string tileset)
+        {
+            if (tilesets.ContainsKey(tileset))
+            {
+                RegisterTilemap(tilemap, tilesets[tileset]);
+            }
+            else
+            {
+                RequestTileset(tileset);
+                AddTilemapToWaitlist(tilemap);
+            }
+        }
+        public void RegisterTilemap(TilemapData tilemap, Tileset tileset)
+        {
+            RegisterTilemap(new Tilemap(tilemap, tileset));
+        }
+        public void RegisterTilemap(Tilemap tilemap)
+        {
+            if (tilemaps.ContainsKey(tilemap.Name)) throw new ArgumentException($"Tried to register duplicate tilemap {tilemap.Name}!");
+            tilemaps.Add(tilemap.Name, tilemap);
+        }
+
         public void RegisterTileset(TilesetData data)
         {
             var tileset = new Tileset(data);
@@ -75,11 +90,38 @@ namespace GiantScape.Client.Tilemaps
         public void RegisterTileset(Tileset tileset)
         {
             tilesets.Add(tileset.TilesetName, tileset);
+            ResolveWaitingTilemaps(tileset);
         }
 
         public void RequestTileset(string tilesetID)
         {
 
+        }
+
+        private void ResolveWaitingTilemaps(Tileset tileset)
+        {
+            string id = tileset.TilesetName;
+            if (!tilemapsWaitingTileset.ContainsKey(id)) return;
+
+            foreach (var tilemap in tilemapsWaitingTileset[id])
+            {
+                RegisterTilemap(tilemap, tileset);
+            }
+        }
+
+        private void AddTilemapToWaitlist(TilemapData tilemap)
+        {
+            string tileset = tilemap.TilesetID;
+            if (tilemapsWaitingTileset.ContainsKey(tileset))
+            {
+                tilemapsWaitingTileset[tileset].Add(tilemap);
+            }
+            else
+            {
+                var list = new List<TilemapData>();
+                list.Add(tilemap);
+                tilemapsWaitingTileset.Add(tileset, list);
+            }
         }
 
         private void LoadDataToTilemap(LayerData layer, UnityTilemap tilemap, Tileset tileset, Vector2Int offset)
