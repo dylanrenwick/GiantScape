@@ -1,8 +1,8 @@
 ﻿using System;
 
 using GiantScape.Common.Game;
-using GiantScape.Server.Accounts;
 using GiantScape.Server.Data.Models;
+using GiantScape.Server.DataStores;
 using GiantScape.Server.Net;
 
 namespace GiantScape.Server
@@ -12,6 +12,7 @@ namespace GiantScape.Server
         public PlayerModel Player { get; set; }
         public PlayerEntity Entity { get; set; }
         public NetworkClient Client { get; set; }
+        public DataStore Data { get; set; }
     }
 
     internal class PlayerClientEventArgs : EventArgs
