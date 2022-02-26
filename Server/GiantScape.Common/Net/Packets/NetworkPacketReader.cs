@@ -97,7 +97,7 @@ namespace GiantScape.Common.Net.Packets
             switch (type)
             {
                 case PacketType.None:
-                    return new MiscPacket(packet);
+                    return new BinaryPacket(packet);
                 case PacketType.Close:
                     var close = new StringPacket(type);
                     close.FromBytes(packet);
@@ -116,7 +116,7 @@ namespace GiantScape.Common.Net.Packets
                     bsonPacket.FromBytes(packet);
                     return bsonPacket;
                 default:
-                    return new MiscPacket(type);
+                    return new BinaryPacket(type);
             }
         }
     }

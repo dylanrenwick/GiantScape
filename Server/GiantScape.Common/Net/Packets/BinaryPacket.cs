@@ -2,7 +2,7 @@
 
 namespace GiantScape.Common.Net.Packets
 {
-    public class MiscPacket : NetworkPacket
+    public class BinaryPacket : NetworkPacket
     {
         public override PacketType Type => type;
 
@@ -15,16 +15,16 @@ namespace GiantScape.Common.Net.Packets
 
         public override void FromBytes(byte[] bytes) => content = bytes;
 
-        public MiscPacket()
+        public BinaryPacket()
         {
             this.content = Array.Empty<byte>();
         }
-        public MiscPacket(PacketType type)
+        public BinaryPacket(PacketType type)
         {
             this.type = type;
             this.content = Array.Empty<byte>();
         }
-        public MiscPacket(byte[] content)
+        public BinaryPacket(byte[] content)
         {
             this.content = content;
         }

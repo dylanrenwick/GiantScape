@@ -28,7 +28,7 @@ namespace GiantScape.Server.Accounts
         public void RequestLogin(NetworkClient client)
         {
             Log.Debug($"{client} Sending login request");
-            var loginRequestPacket = new MiscPacket(PacketType.LoginRequest);
+            var loginRequestPacket = new BinaryPacket(PacketType.LoginRequest);
             client.SendPacket(loginRequestPacket);
             loginRequested.Add(client);
         }
@@ -54,7 +54,7 @@ namespace GiantScape.Server.Accounts
                 PlayerClient player = LoadPlayerInfo(client, packet.Username);
 
                 Log.Info($"{client} Login successful");
-                client.SendPacket(new MiscPacket(PacketType.LoginSuccess));
+                client.SendPacket(new BinaryPacket(PacketType.LoginSuccess));
                 loginRequested.Remove(client);
 
                 PlayerLogin?.Invoke(client, new PlayerClientEventArgs(player));
@@ -62,7 +62,7 @@ namespace GiantScape.Server.Accounts
             else
             {
                 Log.Warn($"{client} Login failed");
-                client.SendPacket(new MiscPacket(PacketType.LoginFail));
+                client.SendPacket(new BinaryPacket(PacketType.LoginFail));
             }
         }
 

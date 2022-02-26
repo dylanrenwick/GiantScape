@@ -50,7 +50,7 @@ namespace GiantScape.Server.Net
                     else
                     {
                         state = ClientState.Connected;
-                        var ack = new MiscPacket(PacketType.Ack);
+                        var ack = new BinaryPacket(PacketType.Ack);
                         connection.SendPacket(ack);
                         ConnectionEstablished?.Invoke(this, new EventArgs());
                     }
