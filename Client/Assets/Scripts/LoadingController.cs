@@ -27,8 +27,6 @@ namespace GiantScape.Client
         [SerializeField]
         private LoginController login;
         [SerializeField]
-        private NetworkController network;
-        [SerializeField]
         private LoadingPanel loadingPanel;
         [SerializeField]
         private ClientController client;
