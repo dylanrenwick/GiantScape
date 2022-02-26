@@ -99,11 +99,21 @@ namespace GiantScape.Client.Tilemaps
             if (data.TilesetName != tilesetID) Debug.LogWarning($"Tileset ID of {data.TilesetName} does not match requested ID of {tilesetID}");
             RegisterTileset(data);
         }
+        public IEnumerator RequestTilemap()
+        {
+            AsyncPromise<TilemapData> request = client.RequestMap();
+            while (!request.IsDone) yield return null;
+
+            TilemapData data = request.Result;
+            if (data == null) throw new Exception($"Could not load Tilemap data from server!");
+
+            RegisterTilemap(data);
+        }
 
         private void Start()
         {
             client = GameObject.Find("Controller").GetComponent<ClientController>();
-            client.Client.PacketReceived += OnPacketReceived;
+            RequestTilemap();
         }
 
         private void ResolveWaitingTilemaps(Tileset tileset)
