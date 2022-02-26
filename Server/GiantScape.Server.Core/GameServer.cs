@@ -93,7 +93,11 @@ namespace GiantScape.Server
                     SendWorldData(player);
                     break;
                 case PacketType.TilesetRequest:
-                    SendTilesetData(player);
+                    var tilesetRequest = (StringPacket)e.Packet;
+                    if (string.IsNullOrEmpty(tilesetRequest.StringVal))
+                        SendTilesetData(player);
+                    else
+                        SendTilesetData(player, tilesetRequest.StringVal);
                     break;
                 default:
                     break;
@@ -111,6 +115,13 @@ namespace GiantScape.Server
         {
             Log.Info($"{player.Client} Sending tileset data...");
             TilesetData tilesetData = world.GetTilesetDataForPlayer(player.Entity);
+            var tilesetPacket = new BinaryPacket(PacketType.Tileset, Serializer.Serialize(tilesetData));
+            player.Client.SendPacket(tilesetPacket);
+        }
+        private void SendTilesetData(PlayerClient player, string tilesetID)
+        {
+            Log.Info($"{player.Client} Sending tileset data...");
+            TilesetData tilesetData = world.GetTilesetData(tilesetID);
             var tilesetPacket = new BinaryPacket(PacketType.Tileset, Serializer.Serialize(tilesetData));
             player.Client.SendPacket(tilesetPacket);
         }
