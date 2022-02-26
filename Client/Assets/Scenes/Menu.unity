@@ -811,8 +811,9 @@ GameObject:
   - component: {fileID: 505677930}
   - component: {fileID: 505677928}
   - component: {fileID: 505677931}
+  - component: {fileID: 505677932}
   m_Layer: 0
-  m_Name: NetworkController
+  m_Name: Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -825,7 +826,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505677927}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 218456b65ef02fa43838a67b272e2a32, type: 3}
   m_Name: 
@@ -874,7 +875,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   network: {fileID: 505677928}
-  scenePath: Main
+  LoginSuccess:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &505677932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505677927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2a7f330c3d0d5340a81b1949b576655, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  address: 127.0.0.1
+  port: 17000
 --- !u!1 &660048029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1638,7 +1655,7 @@ MonoBehaviour:
   usernameField: {fileID: 1165359154}
   passwordField: {fileID: 387136652}
   errorText: {fileID: 1901816288}
-  loginController: {fileID: 505677931}
+  loadingController: {fileID: 0}
 --- !u!114 &1901320420
 MonoBehaviour:
   m_ObjectHideFlags: 0
