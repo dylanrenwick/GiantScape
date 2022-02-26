@@ -54,12 +54,6 @@ namespace GiantScape.Client.Tilemaps
             }
         }
 
-        private void Start()
-        {
-            client = GameObject.Find("Controller").GetComponent<ClientController>();
-            client.Client.PacketReceived += OnPacketReceived;
-        }
-
         public void RegisterTilemap(TilemapData tilemap, string tileset)
         {
             if (tilesets.ContainsKey(tileset))
@@ -96,6 +90,12 @@ namespace GiantScape.Client.Tilemaps
         public void RequestTileset(string tilesetID)
         {
 
+        }
+
+        private void Start()
+        {
+            client = GameObject.Find("Controller").GetComponent<ClientController>();
+            client.Client.PacketReceived += OnPacketReceived;
         }
 
         private void ResolveWaitingTilemaps(Tileset tileset)
