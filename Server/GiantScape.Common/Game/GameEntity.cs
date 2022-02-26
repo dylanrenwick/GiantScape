@@ -14,5 +14,10 @@ namespace GiantScape.Common.Game
             ID = Guid.NewGuid().ToString();
             MapID = mapID;
         }
+
+        public override string ToString()
+        {
+            return $"{{{ID}}}";
+        }
     }
 }
