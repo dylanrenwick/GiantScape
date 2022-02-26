@@ -95,7 +95,7 @@ namespace GiantScape.Client.Tilemaps
             {
                 for (int x = 0; x < Size.x; x++)
                 {
-                    var tile = tileset.GetTile(layer.tiles[y * Size.x + x]);
+                    var tile = tileset.GetTile(layer.Tiles[y * Size.x + x]);
                     var tilemapPos = new Vector3Int(x + offset.x, (Size.y - y) + offset.y, 0);
                     tilemap.SetTile(tilemapPos, tile);
                 }
