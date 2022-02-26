@@ -99,7 +99,7 @@ namespace GiantScape.Common.Net.Packets
                 case PacketType.None:
                     return new MiscPacket(packet);
                 case PacketType.Close:
-                    var close = new ClosePacket();
+                    var close = new StringPacket(type);
                     close.FromBytes(packet);
                     return close;
                 case PacketType.Handshake:

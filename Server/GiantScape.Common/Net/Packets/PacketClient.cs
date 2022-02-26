@@ -32,7 +32,7 @@ namespace GiantScape.Common.Net.Packets
         {
             if (sendPacket)
             {
-                var packet = new ClosePacket(reason);
+                var packet = new StringPacket(PacketType.Close, reason);
                 connection.SendPacket(packet);
             }
             connection.Close();
@@ -62,8 +62,8 @@ namespace GiantScape.Common.Net.Packets
         {
             if (e.Packet.Type == PacketType.Close)
             {
-                var closePacket = (ClosePacket)e.Packet;
-                Close(closePacket.Reason, false);
+                var closePacket = (StringPacket)e.Packet;
+                Close(closePacket.StringVal, false);
                 return;
             }
 
