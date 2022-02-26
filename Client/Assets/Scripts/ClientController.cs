@@ -21,6 +21,14 @@ namespace GiantScape.Client
             return Client.Start();
         }
 
+        public AsyncPromise Login(string username, string passwordHash)
+        {
+            var packet = new LoginPacket(username, passwordHash);
+
+            AsyncPromise<NetworkPacket> netRequest = Client.SendWithResponse(packet, PacketType.LoginSuccess);
+            return netRequest;
+        }
+
         public AsyncPromise<TilemapData> RequestMap()
         {
             var promise = new AsyncPromise<TilemapData>();
