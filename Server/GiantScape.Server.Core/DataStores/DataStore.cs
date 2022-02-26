@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using GiantScape.Common;
+using GiantScape.Common.Game;
+
 namespace GiantScape.Server.DataStores
 {
     internal partial class DataStore
@@ -31,6 +33,7 @@ namespace GiantScape.Server.DataStores
                 byte[] fileContents = File.ReadAllBytes(filepath);
                 dataStore = Serializer.Deserialize<DataStore>(fileContents);
             }
+            else dataStore = Default();
 
             return dataStore;
         }
@@ -41,6 +44,16 @@ namespace GiantScape.Server.DataStores
         public static DataStore FromJson(JToken json)
         {
             return json.ToObject<DataStore>();
+        }
+
+        private static DataStore Default()
+        {
+            DataStore dataStore = new DataStore();
+
+            dataStore.MapID = "13a3afd9-7408-45b1-97bc-87f13bff024d";
+            dataStore.Position = new Vector2Int(8, 5);
+
+            return dataStore;
         }
     }
 }
