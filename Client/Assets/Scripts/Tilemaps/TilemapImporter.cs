@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -62,7 +63,7 @@ namespace GiantScape.Client.Tilemaps
             }
             else
             {
-                RequestTileset(tileset);
+                StartCoroutine(RequestTileset(tileset));
                 AddTilemapToWaitlist(tilemap);
             }
         }
@@ -87,9 +88,16 @@ namespace GiantScape.Client.Tilemaps
             ResolveWaitingTilemaps(tileset);
         }
 
-        public void RequestTileset(string tilesetID)
+        public IEnumerator RequestTileset(string tilesetID)
         {
+            AsyncPromise<TilesetData> request = client.RequestTileset(tilesetID);
+            while (!request.IsDone) yield return null;
 
+            TilesetData data = request.Result;
+            if (data == null) throw new Exception($"Could not load Tileset data from server!");
+
+            if (data.TilesetName != tilesetID) Debug.LogWarning($"Tileset ID of {data.TilesetName} does not match requested ID of {tilesetID}");
+            RegisterTileset(data);
         }
 
         private void Start()
