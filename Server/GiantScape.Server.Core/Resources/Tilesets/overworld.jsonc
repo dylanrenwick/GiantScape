@@ -1,5 +1,5 @@
 {
-    "tilesetName": "overworld",
+    "name": "overworld",
     "tiles": [
         /* 0  */ { "name": "null", "collision": 0, "pathWeight": 1 },
         /* 1  */ { "name": "water", "collision": 15, "pathWeight": 1 },
