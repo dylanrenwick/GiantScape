@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 
@@ -70,6 +70,8 @@ namespace GiantScape.Server
             else players.Add(client, player);
 
             player.Data = DataStore.FromFile(player.Player.DataStoreFilename);
+
+            world.CreatePlayer(player);
         }
 
         private void OnPacketReceived(object sender, PacketEventArgs e)
