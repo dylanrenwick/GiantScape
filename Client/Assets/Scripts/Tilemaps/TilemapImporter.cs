@@ -1,10 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 using UnityEngine;
 
-using GiantScape.Client.Net;
 using GiantScape.Common;
 using GiantScape.Common.Game.Tilemaps;
 using GiantScape.Common.Net.Packets;
